@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>610</width>
+    <height>430</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>32 qt-주식계좌조회</string>
+  </property>
+  <widget class="QPushButton" name="btn_login">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>75</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>로그인</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_jango">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>50</y>
+     <width>130</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>잔고 (CSPAQ12300)</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_miche">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>50</y>
+     <width>150</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>미체결 (CSPAQ13700)</string>
+   </property>
+  </widget>
+  <widget class="QPlainTextEdit" name="text_result">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>80</y>
+     <width>610</width>
+     <height>351</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOn</enum>
+   </property>
+   <property name="undoRedoEnabled">
+    <bool>false</bool>
+   </property>
+   <property name="lineWrapMode">
+    <enum>QPlainTextEdit::NoWrap</enum>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_clear">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>50</y>
+     <width>112</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>지우기</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_yesu">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>50</y>
+     <width>150</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>예수금 (CSPAQ12200)</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

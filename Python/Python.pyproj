@@ -1,0 +1,53 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>83ae92fd-f9e4-418a-8111-6acf8c1a4ad6</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>
+    </StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>Python</Name>
+    <RootNamespace>Python</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="00. 사용방법.py" />
+    <Compile Include="01. 로그인.py" />
+    <Compile Include="02. 전체업종.py" />
+    <Compile Include="03. 주식전종목조회.py" />
+    <Compile Include="04. 주식현재가.py" />
+    <Compile Include="05. 주식차트.py" />
+    <Compile Include="06. 주식차트 -연속조회.py" />
+    <Compile Include="07. 계좌예수금조회.py" />
+    <Compile Include="08. 지수선물마스터조회.py" />
+    <Compile Include="09. 거래대금상위.py" />
+    <Compile Include="10. 서버저장조건 리스트조회.py" />
+    <Compile Include="11. 서버저장조건 조건검색.py" />
+    <Compile Include="12. 서버저장조건 실시간검색.py" />
+    <Compile Include="13. 조건검색-텔레그램 전송.py" />
+    <Compile Include="21. 웹소켓 실시간 체결시세.py" />
+    <Compile Include="22. 국내선물-실시간시세.py" />
+    <Compile Include="31. qt-주식정보조회.py" />
+    <Compile Include="32. qt-주식계좌조회.py" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>
