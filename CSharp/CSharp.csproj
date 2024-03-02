@@ -10,6 +10,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="eBEST.OpenApi" Version="1.4.0" />
+		<PackageReference Include="ConsoleTables" Version="2.6.1" />
 	</ItemGroup>
 
 </Project>

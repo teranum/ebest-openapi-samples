@@ -2,7 +2,7 @@
 
 namespace CSharp;
 
-internal class _02 : SampleBase
+internal class _08 : SampleBase
 {
     public static async Task Main()
     {
@@ -16,36 +16,34 @@ internal class _02 : SampleBase
         }
         print($"연결성공, 접속서버: {(api.ServerType == EBestOpenApi.SERVER_TYPE.모의투자 ? "모의투자" : "실투자")}");
 
-        // [요청] t8424 : 전체업종
-        t8424 tr_data = new()
+        // [요청] t8432 : 지수선물마스터조회API용
+        t8432 tr_data = new()
         {
-            t8424InBlock = new("1"),
+            t8432InBlock = new("0"),
         };
         await api.GetTRData(tr_data);
-        if (tr_data.t8424OutBlock is null)
+        if (tr_data.t8432OutBlock is null)
         {
             // 오류 처리
             print(tr_data.rsp_cd.Length > 0 ? $"{tr_data.rsp_cd}-{tr_data.rsp_msg}" : api.LastErrorMessage);
             return;
         }
 
-        // tr_data.t8424OutBlock 데이터 처리
-        print(tr_data.t8424OutBlock);
+        // tr_data.t8432OutBlock 데이터 처리
+        print(tr_data.t8432OutBlock);
     }
 
-    // t8424 : 전체업종
-    public record t8424InBlock(string gubun1);
-    public record t8424OutBlock(string hname, string upcode);
+    // t8432 : 지수선물마스터조회API용
+    public record t8432InBlock(string gubun);
+    public record t8432OutBlock(string hname, string shcode, string expcode, double uplmtprice, double dnlmtprice, double jnilclose, double jnilhigh, double jnillow, double recprice);
 
-    [Path("/indtp/market-data")]
-    public class t8424 : TrBase
+    [Path("/futureoption/market-data")]
+    public class t8432 : TrBase
     {
         // 요청
-        public t8424InBlock? t8424InBlock { get; set; }
+        public t8432InBlock? t8432InBlock { get; set; }
 
         // 응답
-        public t8424OutBlock[]? t8424OutBlock { get; set; }
+        public t8432OutBlock[]? t8432OutBlock { get; set; }
     }
-
 }
-

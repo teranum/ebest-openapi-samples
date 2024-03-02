@@ -2,9 +2,8 @@
 
 namespace CSharp;
 
-internal class _03
+internal class _03 : SampleBase
 {
-    static void print(string lineText) => Console.WriteLine(lineText);
     public static async Task Main()
     {
         // API 생성
@@ -31,11 +30,7 @@ internal class _03
         }
 
         // tr_data.t8436OutBlock 데이터 처리
-        print($"Count={tr_data.t8436OutBlock.Length}");
-        foreach (var item in tr_data.t8436OutBlock)
-        {
-            print($"{item.hname} : {item.expcode}");
-        }
+        print(tr_data.t8436OutBlock);
     }
 
     // t8436 : 주식종목조회 API용

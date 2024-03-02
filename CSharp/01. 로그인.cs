@@ -2,9 +2,8 @@
 
 namespace CSharp;
 
-internal class _01
+internal class _01 : SampleBase
 {
-    static void print(string lineText) => Console.WriteLine(lineText);
     public static async Task Main()
     {
         // API 생성
