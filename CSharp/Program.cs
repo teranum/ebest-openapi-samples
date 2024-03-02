@@ -16,7 +16,7 @@ namespace CSharp
 
     internal class SampleBase
     {
-        static protected JsonSerializerOptions _jsonOptions = new() { NumberHandling = JsonNumberHandling.AllowReadingFromString };
+        protected static JsonSerializerOptions _jsonOptions = new() { NumberHandling = JsonNumberHandling.AllowReadingFromString };
         public static void print<T>(IEnumerable<T>? array)
         {
             if (array == null) return;
