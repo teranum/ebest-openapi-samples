@@ -32,21 +32,6 @@ internal class _02 : SampleBase
         // tr_data.t8424OutBlock 데이터 처리
         print(tr_data.t8424OutBlock);
     }
-
-    // t8424 : 전체업종
-    public record t8424InBlock(string gubun1);
-    public record t8424OutBlock(string hname, string upcode);
-
-    [Path("/indtp/market-data")]
-    public class t8424 : TrBase
-    {
-        // 요청
-        public t8424InBlock? t8424InBlock { get; set; }
-
-        // 응답
-        public t8424OutBlock[]? t8424OutBlock { get; set; }
-    }
-
 }
 
 // Output:

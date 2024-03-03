@@ -46,7 +46,4 @@ internal class _21 : SampleBase
             }
         }
     }
-
-    // S3_ : KOSPI체결
-    public record S3_OutBlock(string chetime, string sign, int change, double drate, int price, string opentime, int open, string hightime, int high, string lowtime, int low, string cgubun, int cvolume, long volume, long value, long mdvolume, int mdchecnt, long msvolume, int mschecnt, double cpower, int w_avrg, int offerho, int bidho, string status, long jnilvolume, string shcode);
 }

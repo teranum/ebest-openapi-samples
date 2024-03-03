@@ -98,22 +98,6 @@ internal class _06 : SampleBase
 
         return (errMsg, DataFrames.SelectMany(x => x).ToArray());
     }
-
-    // t8410 : API전용주식챠트(일주월년)
-    public record t8410InBlock(string shcode, string gubun, int qrycnt, string sdate, string edate, string cts_date, string comp_yn, string sujung);
-    public record t8410OutBlock(string shcode, int jisiga, int jihigh, int jilow, int jiclose, long jivolume, int disiga, int dihigh, int dilow, int diclose, int highend, int lowend, string cts_date, string s_time, string e_time, string dshmin, int rec_count, int svi_uplmtprice, int svi_dnlmtprice);
-    public record t8410OutBlock1(string date, long open, long high, long low, long close, long jdiff_vol, long value, long jongchk, double rate, long pricechk, long ratevalue, string sign);
-
-    [Path("/stock/chart")]
-    public class t8410 : TrBase
-    {
-        // 요청
-        public t8410InBlock? t8410InBlock { get; set; }
-
-        // 응답
-        public t8410OutBlock? t8410OutBlock { get; set; }
-        public t8410OutBlock1[]? t8410OutBlock1 { get; set; }
-    }
 }
 
 // Output:

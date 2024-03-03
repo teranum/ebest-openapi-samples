@@ -33,22 +33,6 @@ internal class _09 : SampleBase
         print(tr_data.t1463OutBlock);
         print(tr_data.t1463OutBlock1);
     }
-
-    // t1463 : 거래대금상위
-    public record t1463InBlock(string gubun, string jnilgubun, long jc_num, int sprice, int eprice, long volume, int idx, long jc_num2);
-    public record t1463OutBlock(int idx);
-    public record t1463OutBlock1(string hname, int price, string sign, int change, double diff, long volume, long value, long jnilvalue, double bef_diff, string shcode, string filler, long jnilvolume);
-
-    [Path("/stock/high-item")]
-    public class t1463 : TrBase
-    {
-        // 요청
-        public t1463InBlock? t1463InBlock { get; set; }
-
-        // 응답
-        public t1463OutBlock? t1463OutBlock { get; set; }
-        public t1463OutBlock1[]? t1463OutBlock1 { get; set; }
-    }
 }
 
 // Output:

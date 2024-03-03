@@ -69,36 +69,4 @@ internal class _11 : SampleBase
         print(tr_data_cond.t1859OutBlock);
         print(tr_data_cond.t1859OutBlock1);
     }
-
-    // t1866 : 서버저장조건리스트조회(API)
-    public record t1866InBlock(string user_id, string gb, string group_name, string cont, string contkey);
-    public record t1866OutBlock(int result_count, string cont, string contkey);
-    public record t1866OutBlock1(string query_index, string group_name, string query_name);
-
-    [Path("/stock/item-search")]
-    public class t1866 : TrBase
-    {
-        // 요청
-        public t1866InBlock? t1866InBlock { get; set; }
-
-        // 응답
-        public t1866OutBlock? t1866OutBlock { get; set; }
-        public t1866OutBlock1[]? t1866OutBlock1 { get; set; }
-    }
-
-    // t1859 : 서버저장조건 조건검색
-    public record t1859InBlock(string query_index);
-    public record t1859OutBlock(int result_count, int result_time, string text);
-    public record t1859OutBlock1(string shcode, string hname, int price, string sign, long change, double diff, long volume);
-
-    [Path("/stock/item-search")]
-    public class t1859 : TrBase
-    {
-        // 요청
-        public t1859InBlock? t1859InBlock { get; set; }
-
-        // 응답
-        public t1859OutBlock? t1859OutBlock { get; set; }
-        public t1859OutBlock1[]? t1859OutBlock1 { get; set; }
-    }
 }

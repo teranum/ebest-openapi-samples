@@ -66,21 +66,4 @@ internal class _22 : SampleBase
             }
         }
     }
-
-    // t9943 : 지수선물마스터조회API용
-    public record t9943InBlock(string gubun);
-    public record t9943OutBlock(string hname, string shcode, string expcode);
-
-    [Path("/futureoption/market-data")]
-    public class t9943 : TrBase
-    {
-        // 요청
-        public t9943InBlock? t9943InBlock { get; set; }
-
-        // 응답
-        public t9943OutBlock[]? t9943OutBlock { get; set; }
-    }
-
-    // FC0 : KOSPI200선물체결(C0)
-    public record FC0OutBlock(string chetime, string sign, double change, double drate, double price, double open, double high, double low, string cgubun, int cvolume, long volume, long value, long mdvolume, int mdchecnt, long msvolume, int mschecnt, double cpower, double offerho1, double bidho1, int openyak, double k200jisu, double theoryprice, double kasis, double sbasis, double ibasis, int openyakcha, string jgubun, long jnilvolume, string futcode);
 }

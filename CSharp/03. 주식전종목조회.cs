@@ -32,21 +32,6 @@ internal class _03 : SampleBase
         // tr_data.t8436OutBlock 데이터 처리
         print(tr_data.t8436OutBlock);
     }
-
-    // t8436 : 주식종목조회 API용
-    public record t8436InBlock(string gubun);
-    public record t8436OutBlock(string hname, string shcode, string expcode, string etfgubun, int uplmtprice, int dnlmtprice, int jnilclose, string memedan, int recprice, string gubun, string bu12gubun, string spac_gubun, string filler);
-
-    [Path("/stock/etc")]
-    public class t8436 : TrBase
-    {
-        // 요청
-        public t8436InBlock? t8436InBlock { get; set; }
-
-        // 응답
-        public t8436OutBlock[]? t8436OutBlock { get; set; }
-    }
-
 }
 
 // Output:

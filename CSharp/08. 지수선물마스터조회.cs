@@ -32,20 +32,6 @@ internal class _08 : SampleBase
         // tr_data.t8432OutBlock 데이터 처리
         print(tr_data.t8432OutBlock);
     }
-
-    // t8432 : 지수선물마스터조회API용
-    public record t8432InBlock(string gubun);
-    public record t8432OutBlock(string hname, string shcode, string expcode, double uplmtprice, double dnlmtprice, double jnilclose, double jnilhigh, double jnillow, double recprice);
-
-    [Path("/futureoption/market-data")]
-    public class t8432 : TrBase
-    {
-        // 요청
-        public t8432InBlock? t8432InBlock { get; set; }
-
-        // 응답
-        public t8432OutBlock[]? t8432OutBlock { get; set; }
-    }
 }
 
 // Output:

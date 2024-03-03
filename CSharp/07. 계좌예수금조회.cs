@@ -33,22 +33,6 @@ internal class _07 : SampleBase
         print(tr_data.CSPAQ22200OutBlock1);
         print(tr_data.CSPAQ22200OutBlock2);
     }
-
-    // CSPAQ22200 : 현물계좌예수금 주문가능금액 총평가2
-    public record CSPAQ22200InBlock1(/*int RecCnt, string MgmtBrnNo, string AcntNo, string Pwd, */string BalCreTp);
-    public record CSPAQ22200OutBlock1(int RecCnt, string MgmtBrnNo, string AcntNo, string Pwd, string BalCreTp);
-    public record CSPAQ22200OutBlock2(int RecCnt, string BrnNm, string AcntNm, long MnyOrdAbleAmt, long SubstOrdAbleAmt, long SeOrdAbleAmt, long KdqOrdAbleAmt, long CrdtPldgOrdAmt, long MgnRat100pctOrdAbleAmt, long MgnRat35ordAbleAmt, long MgnRat50ordAbleAmt, long CrdtOrdAbleAmt, long Dps, long SubstAmt, long MgnMny, long MgnSubst, long D1Dps, long D2Dps, long RcvblAmt, long D1ovdRepayRqrdAmt, long D2ovdRepayRqrdAmt, long MloanAmt, double ChgAfPldgRat, long RqrdPldgAmt, long PdlckAmt, long OrgPldgSumAmt, long SubPldgSumAmt, long CrdtPldgAmtMny, long CrdtPldgSubstAmt, long Imreq, long CrdtPldgRuseAmt, long DpslRestrcAmt, long PrdaySellAdjstAmt, long PrdayBuyAdjstAmt, long CrdaySellAdjstAmt, long CrdayBuyAdjstAmt, long CslLoanAmtdt1);
-
-    [Path("/stock/accno")]
-    public class CSPAQ22200 : TrBase
-    {
-        // 요청
-        public CSPAQ22200InBlock1? CSPAQ22200InBlock1 { get; set; }
-
-        // 응답
-        public CSPAQ22200OutBlock1? CSPAQ22200OutBlock1 { get; set; }
-        public CSPAQ22200OutBlock2? CSPAQ22200OutBlock2 { get; set; }
-    }
 }
 
 // Output:
