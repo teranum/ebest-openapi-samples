@@ -1,6 +1,6 @@
-from prettytable import *
+ï»¿from prettytable import *
 
-# prettytableÀ» »ç¿ëÇÏ¿© µ¥ÀÌÅÍ¸¦ Ç¥·Î ÀÌ»Ú°Ô Ãâ·ÂÇÏ´Â Å¬·¡½º
+# prettytableì„ ì‚¬ìš©í•˜ì—¬ ë°ì´í„°ë¥¼ í‘œë¡œ ì´ì˜ê²Œ ì¶œë ¥í•˜ëŠ” í´ë˜ìŠ¤
 class print_table:
     def __init__(self, data):
         if isinstance(data, dict):
