@@ -5,6 +5,9 @@ from app_keys import appkey, appsecretkey, stock_dir
 # app_keys.py 파일에 appkey, appsecretkey, stock_dir 변수를 정의하고 사용하세요
 # stock_dir 변수에 저장할 디렉토리를 설정하세요. (ex. stock_dir = 'C:/stockdata')
 
+'''
+주식시장 전체종목 일봉데이터 수집
+'''
 async def main():
     api=ebest.OpenApi()
     if not await api.login(appkey, appsecretkey): return print(f"연결실패: {api.last_message}")
