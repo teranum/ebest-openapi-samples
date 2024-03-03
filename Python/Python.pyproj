@@ -4,8 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>83ae92fd-f9e4-418a-8111-6acf8c1a4ad6</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>
-    </StartupFile>
+    <StartupFile>41. 코스피 주가 출력.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -27,6 +26,8 @@
     <Compile Include="02. 전체업종.py" />
     <Compile Include="03. 주식전종목조회.py" />
     <Compile Include="04. 주식현재가.py" />
+    <Compile Include="41. 코스피 주가 출력.py" />
+    <Compile Include="43. 차트 보조지표 계산.py" />
     <Compile Include="05. 주식차트.py" />
     <Compile Include="06. 주식차트 -연속조회.py" />
     <Compile Include="07. 계좌예수금조회.py" />
@@ -41,6 +42,7 @@
     <Compile Include="22. 국내선물-실시간시세.py" />
     <Compile Include="31. qt-주식정보조회.py" />
     <Compile Include="32. qt-주식계좌조회.py" />
+    <Compile Include="42. 주식 일봉데이터 수집.py" />
     <Compile Include="common.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

@@ -3,7 +3,7 @@
 pip install asyncio
 pip install ebest
 
-(일부 샘플은 prettytable 패키지 필요)
+(일부 샘플은 prettytable, padas, ta, matplotlib 패키지 필요)
 
 ebest 모듈사용
 프로퍼티:
@@ -59,5 +59,5 @@ ebest 모듈사용
 10 ~ 조건검색, 실시간검색
 20 ~ 웹소켓 을 이용한 실시간 시세
 30 ~ PyQt6를 이용한 GUI 샘플코드
-
+40 ~ 기타 샘플코드
 """
