@@ -1,7 +1,7 @@
 ﻿import asyncio
 import ebest
+from common import *
 from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsecretkey 변수를 정의하고 사용하세요
-from prettytable import *
 
 async def main():
     api=ebest.OpenApi()
@@ -13,14 +13,9 @@ async def main():
         }
     }
     response = await api.request("t8432", request)
-    
     if not response: return print(f"요청실패: {api.last_message}")
     
-    data = response.body["t8432OutBlock"]
-    table = PrettyTable()
-    table.field_names = data[0]
-    table.add_rows([x.values() for x in data])
-    print(table)
+    print_table(response.body["t8432OutBlock"])
     
     ... # 다른 작업 수행
     await api.close()
@@ -30,6 +25,7 @@ asyncio.run(main())
 
 # Output:
 """
+Row Count = 13
 +--------------+----------+--------------+------------+------------+-----------+----------+---------+----------+
 |    hname     |  shcode  |   expcode    | uplmtprice | dnlmtprice | jnilclose | jnilhigh | jnillow | recprice |
 +--------------+----------+--------------+------------+------------+-----------+----------+---------+----------+

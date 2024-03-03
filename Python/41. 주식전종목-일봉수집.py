@@ -1,21 +1,30 @@
 ﻿import asyncio
 import ebest
-from common import *
-from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsecretkey 변수를 정의하고 사용하세요
+from app_keys import appkey, appsecretkey, stock_dir # app_keys.py 파일에 appkey, appsecretkey 변수를 정의하고 사용하세요
+from prettytable import *
 
 async def main():
     api=ebest.OpenApi()
     if not await api.login(appkey, appsecretkey): return print(f"연결실패: {api.last_message}")
     
+    # [요청] t9945 : 주식마스터조회API용-종목명40bytes
     request = {
-        "t8436InBlock": {
-            "gubun": "0", # 구분(0: 전체, 1: 코스피, 2: 코스닥)
-        }
+        "t9945InBlock": {
+            "gubun": "1",
+        },
     }
-    response = await api.request("t8436", request)
+    response = await api.request("t9945", request)
+    
+    # 당일보관된 데이터가 없으면 종료
+    
+    
     if not response: return print(f"요청실패: {api.last_message}")
     
-    print_table(response.body["t8436OutBlock"])
+    data = response.body["t8436OutBlock"]
+    table = PrettyTable()
+    table.field_names = data[0]
+    table.add_rows([x.values() for x in data])
+    print(table)
     
     ... # 다른 작업 수행
     await api.close()
@@ -25,7 +34,6 @@ asyncio.run(main())
 
 # Output:
 """
-Row Count = 3873
 +----------------------+--------+--------------+----------+------------+------------+-----------+---------+----------+-------+-----------+------------+--------+
 |        hname         | shcode |   expcode    | etfgubun | uplmtprice | dnlmtprice | jnilclose | memedan | recprice | gubun | bu12gubun | spac_gubun | filler |
 +----------------------+--------+--------------+----------+------------+------------+-----------+---------+----------+-------+-----------+------------+--------+
@@ -40,5 +48,6 @@ Row Count = 3873
 |      유한양행우      | 000105 | KR7000101006 |    0     |   78300    |   42300    |   60300   |  00001  |  60300   |   1   |     01    |     N      |        |
 |      CJ대한통운      | 000120 | KR7000120006 |    0     |   162200   |   87400    |   124800  |  00001  |  124800  |   1   |     01    |     N      |        |
 |
-...
+
+(중략 ...)
 """

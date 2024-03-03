@@ -1,7 +1,7 @@
 ﻿import asyncio
 import ebest
+from common import *
 from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsecretkey 변수를 정의하고 사용하세요
-from prettytable import *
 
 async def main():
     api=ebest.OpenApi()
@@ -25,17 +25,8 @@ async def main():
     response = await api.request("t1602", request)
     if not response: return print(f"요청실패: {api.last_message}")
     
-    
-    data = response.body["t1602OutBlock"]
-    table = PrettyTable(['key','value'])
-    table.add_rows([list(x) for x in data.items()])
-    print(table)
-    
-    data = response.body["t1602OutBlock1"]
-    table = PrettyTable()
-    table.field_names = data[0]
-    table.add_rows([x.values() for x in data])
-    print(table)
+    print_table(response.body["t1602OutBlock"])
+    print_table(response.body["t1602OutBlock1"])
     
     # [실시간 시세 요청] BM_ : 업종별투자자별매매현황
     await api.add_realtime("BM_", "900")

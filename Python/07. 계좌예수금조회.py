@@ -1,7 +1,7 @@
 ﻿import asyncio
 import ebest
+from common import *
 from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsecretkey 변수를 정의하고 사용하세요
-from prettytable import *
 
 async def main():
     api=ebest.OpenApi()
@@ -13,20 +13,37 @@ async def main():
         }
     }
     response = await api.request("CSPAQ22200", request)
-    
     if not response: return print(f"요청실패: {api.last_message}")
     
-    data = response.body["CSPAQ22200OutBlock1"]
-    table = PrettyTable(['key','value'])
-    table.add_rows([list(x) for x in data.items()])
-    print(table)
-    
-    data = response.body["CSPAQ22200OutBlock2"]
-    table = PrettyTable(['key','value'])
-    table.add_rows([list(x) for x in data.items()])
-    print(table)
+    print_table(response.body["CSPAQ22200OutBlock1"])
+    print_table(response.body["CSPAQ22200OutBlock2"])
     
     ... # 다른 작업 수행
     await api.close()
 
 asyncio.run(main())
+
+# Output:
+"""
+Field Count = 5
++-----------+-------------+
+|    key    |    value    |
++-----------+-------------+
+|   RecCnt  |      1      |
+| MgmtBrnNo |             |
+|   AcntNo  | XXXXXXXXXXX |
+|    Pwd    |   ********  |
+|  BalCreTp |      0      |
++-----------+-------------+
+Field Count = 37
++------------------------+-------------+
+|          key           |    value    |
++------------------------+-------------+
+|         RecCnt         |      1      |
+|         BrnNm          | XXXXXXXXXXX |
+|         AcntNm         |    XXXXX    |
+|     MnyOrdAbleAmt      |      0      |
+|    SubstOrdAbleAmt     |      0      |
+|      SeOrdAbleAmt      |      0      |
+...
+"""

@@ -1,6 +1,6 @@
 ﻿import asyncio
 import ebest
-from prettytable import *
+from common import *
 from app_keys import appkey, appsecretkey, user_id, telegram_token, telegram_chatid
 # app_keys.py 파일에 appkey, appsecretkey, user_id, telegram_token, telegram_chatid 변수를 정의하고 사용하세요
 
@@ -27,19 +27,16 @@ async def main():
     response = await api.request("t1866", request)
     if not response: return print(f"요청실패: {api.last_message}")
     
-    cond_df = response.body["t1866OutBlock1"]
-    table = PrettyTable()
-    table.field_names = cond_df[0]
-    table.add_rows([x.values() for x in cond_df])
-    print(table)
+    cond_list = response.body["t1866OutBlock1"]
+    print_table(cond_list)
     
     # 요청할 조건검색식 선택
-    cond_len = len(cond_df)
+    cond_len = len(cond_list)
     sel_index = int(input(f'조건검색식index (0~{cond_len-1})를 입력하세요:'))
     if sel_index >= cond_len: return print("잘못된 index")
     
     # 조건검색식 조회
-    query_index = cond_df[sel_index]['query_index']
+    query_index = cond_list[sel_index]['query_index']
     request = {
         "t1859InBlock": {
             "query_index": query_index,
@@ -50,10 +47,7 @@ async def main():
     
     item_list = response.body.get('t1859OutBlock1', None)
     if item_list:
-        table = PrettyTable()
-        table.field_names = item_list[0]
-        table.add_rows([x.values() for x in item_list])
-        print(table)
+        print_table(item_list)
     else:
         print(f"조건검색식[{query_index}] 결과 없음")
     
@@ -70,9 +64,7 @@ async def main():
     if not response: return print(f"요청실패: {api.last_message}")
     
     real_req_data = response.body["t1860OutBlock"]
-    table = PrettyTable(['key','value'])
-    table.add_rows([list(x) for x in real_req_data.items()])
-    print(table)
+    print_table(real_req_data)
     
     sAlertNum:str = real_req_data["sAlertNum"]
     if sAlertNum == "":
@@ -80,13 +72,13 @@ async def main():
     else:
         print("실시간검색 등록성공, 5분동안 작동...")
         await api.add_realtime("AFR", sAlertNum)
-        await bot.send_message(telegram_chatid, f"조건검색 실시간 시작 ({cond_df[sel_index]['query_name']})")
+        await bot.send_message(telegram_chatid, f"조건검색 실시간 시작 ({cond_list[sel_index]['query_name']})")
 
         await asyncio.sleep(5*60) # 5분 동안 유효, 후에 중지
         
         # 실시간검색 중지
         await api.remove_realtime("AFR", sAlertNum)
-        await bot.send_message(telegram_chatid, f"조건검색 실시간 중지 ({cond_df[sel_index]['query_name']})")
+        await bot.send_message(telegram_chatid, f"조건검색 실시간 중지 ({cond_list[sel_index]['query_name']})")
         await asyncio.sleep(1)
     
     ... # 다른 작업 수행

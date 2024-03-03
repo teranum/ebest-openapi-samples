@@ -25,6 +25,7 @@
     <Compile Include="00. 사용방법.py" />
     <Compile Include="01. 로그인.py" />
     <Compile Include="02. 전체업종.py" />
+    <Compile Include="41. 주식전종목-일봉수집.py" />
     <Compile Include="03. 주식전종목조회.py" />
     <Compile Include="04. 주식현재가.py" />
     <Compile Include="05. 주식차트.py" />
@@ -41,6 +42,7 @@
     <Compile Include="22. 국내선물-실시간시세.py" />
     <Compile Include="31. qt-주식정보조회.py" />
     <Compile Include="32. qt-주식계좌조회.py" />
+    <Compile Include="common.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

@@ -1,7 +1,7 @@
 ﻿import asyncio
 import ebest
+from common import *
 from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsecretkey 변수를 정의하고 사용하세요
-from prettytable import *
 
 async def main():
     api=ebest.OpenApi()
@@ -20,14 +20,9 @@ async def main():
         }
     }
     response = await api.request("t8410", request)
-    
     if not response: return print(f"요청실패: {api.last_message}")
     
-    data = response.body["t8410OutBlock1"]
-    table = PrettyTable()
-    table.field_names = data[0]
-    table.add_rows([x.values() for x in data])
-    print(table)
+    print_table(response.body["t8410OutBlock1"])
     
     ... # 다른 작업 수행
     await api.close()
@@ -36,6 +31,7 @@ asyncio.run(main())
 
 # Output:
 """
+Row Count = 100
 +----------+-------+-------+-------+-------+-----------+---------+---------+------+----------+-----------+------+
 |   date   |  open |  high |  low  | close | jdiff_vol |  value  | jongchk | rate | pricechk | ratevalue | sign |
 +----------+-------+-------+-------+-------+-----------+---------+---------+------+----------+-----------+------+
@@ -43,7 +39,7 @@ asyncio.run(main())
 | 20231006 | 67100 | 67300 | 66000 | 66000 |  14238326 |  945986 |    0    | 0.00 |    0     |     0     |  5   |
 | 20231010 | 66200 | 67600 | 66200 | 66400 |  19188108 | 1284566 |    0    | 0.00 |    0     |     0     |  2   |
 
-(중략 ...)
+...
 
 | 20240226 | 72300 | 73200 | 72200 | 72800 |  14549894 | 1059031 |    0    | 0.00 |    0     |     0     |  5   |
 | 20240227 | 73100 | 73400 | 72700 | 72900 |  13050455 |  952221 |    0    | 0.00 |    0     |     0     |  2   |

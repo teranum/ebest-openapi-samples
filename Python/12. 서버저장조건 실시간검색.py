@@ -1,7 +1,7 @@
 ﻿import asyncio
 import ebest
+from common import *
 from app_keys import *
-from prettytable import *
 
 async def main():
     api=ebest.OpenApi()
@@ -23,19 +23,16 @@ async def main():
     response = await api.request("t1866", request)
     if not response: return print(f"요청실패: {api.last_message}")
     
-    cond_df = response.body["t1866OutBlock1"]
-    table = PrettyTable()
-    table.field_names = cond_df[0]
-    table.add_rows([x.values() for x in cond_df])
-    print(table)
+    cond_list = response.body["t1866OutBlock1"]
+    print_table(cond_list)
     
     # 요청할 조건검색식 선택
-    cond_len = len(cond_df)
+    cond_len = len(cond_list)
     sel_index = int(input(f'조건검색식index (0~{cond_len-1})를 입력하세요:'))
     if sel_index >= cond_len: return print("잘못된 index")
     
     # 조건검색식 조회
-    query_index = cond_df[sel_index]['query_index']
+    query_index = cond_list[sel_index]['query_index']
     request = {
         "t1859InBlock": {
             "query_index": query_index,
@@ -46,10 +43,7 @@ async def main():
     
     item_list = response.body.get('t1859OutBlock1', None)
     if item_list:
-        table = PrettyTable()
-        table.field_names = item_list[0]
-        table.add_rows([x.values() for x in item_list])
-        print(table)
+        print_table(item_list)
     else:
         print(f"조건검색식[{query_index}] 결과 없음")
     
@@ -66,9 +60,7 @@ async def main():
     if not response: return print(f"요청실패: {api.last_message}")
     
     real_req_data = response.body["t1860OutBlock"]
-    table = PrettyTable(['key','value'])
-    table.add_rows([list(x) for x in real_req_data.items()])
-    print(table)
+    print_table(real_req_data)
     
     sAlertNum:str = real_req_data["sAlertNum"]
     if sAlertNum == "":
