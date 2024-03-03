@@ -14,14 +14,12 @@ def print_table(data):
         if len(data) == 0: return
         if isinstance(data[0], dict):
             table = PrettyTable()
-            fields = data[0]
             table.field_names = data[0]
             table.add_rows([x.values() for x in data])
             print(f"Row Count = {len(data)}")
             print(table)
         else:
             table = PrettyTable(['value'])
-            # table.add_rows(data)
             for x in data:
                 table.add_row([x])
                 pass
