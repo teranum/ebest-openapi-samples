@@ -37,6 +37,7 @@
     <Compile Include="12. 서버저장조건 실시간검색.py" />
     <Compile Include="13. 조건검색-텔레그램 전송.py" />
     <Compile Include="21. 웹소켓 실시간 체결시세.py" />
+    <Compile Include="23. 국내선물-투자자별매매현황-실시간.py" />
     <Compile Include="22. 국내선물-실시간시세.py" />
     <Compile Include="31. qt-주식정보조회.py" />
     <Compile Include="32. qt-주식계좌조회.py" />

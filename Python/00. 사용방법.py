@@ -3,6 +3,8 @@
 pip install asyncio
 pip install ebest
 
+(일부 샘플은 prettytable 패키지 필요)
+
 ebest 모듈사용
 프로퍼티:
     connected -> bool: 연결여부 (연결: True, 미연결: False)

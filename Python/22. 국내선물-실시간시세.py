@@ -25,8 +25,9 @@ async def main():
     # FC0 : KOSPI200선물체결(C0)
     await api.add_realtime("FC0", shcode)
     
-    # 10초후 실시간 시세 중지
-    await asyncio.sleep(10)
+    # 10분후 실시간 시세 중지
+    print("10분동안 실시간 작동중...");
+    await asyncio.sleep(600)
     await api.remove_realtime("FC0", shcode)
     await asyncio.sleep(1)
     

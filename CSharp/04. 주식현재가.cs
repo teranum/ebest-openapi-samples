@@ -47,3 +47,28 @@ internal class _04 : SampleBase
         public t1102OutBlock? t1102OutBlock { get; set; }
     }
 }
+
+// Output:
+/*
+t1102OutBlock, Field Count = 160
+| Key                | Value      |
+|--------------------|------------|
+| hname              | 삼성전자   |
+| price              | 73400      |
+| sign               | 2          |
+| change             | 200        |
+| diff               | 0.27       |
+| volume             | 20502140   |
+| recprice           | 73200      |
+| avg                | 72892      |
+| uplmtprice         | 95100      |
+| dnlmtprice         | 51300      |
+| jnilvolume         | 11795859   |
+| volumediff         | 8706281    |
+| open               | 72600      |
+| opentime           | 090002     |
+| high               | 73400      |
+| hightime           | 153024     |
+| low                | 72000      |
+...
+*/

@@ -5,7 +5,7 @@ using CSharp;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-await _22.Main();
+await _09.Main();
 
 namespace CSharp
 {

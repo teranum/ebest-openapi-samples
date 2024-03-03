@@ -11,8 +11,9 @@ async def main():
     # 삼성전자 주식 실시간 시세 요청
     await api.add_realtime("S3_", "005930")
     
-    # 10초후 삼성전자 주식 실시간 시세 중지
-    await asyncio.sleep(10)
+    # 10분후 실시간 시세 중지
+    print("10분동안 실시간 작동중...");
+    await asyncio.sleep(600)
     await api.remove_realtime("S3_", "005930")
     await asyncio.sleep(1)
     

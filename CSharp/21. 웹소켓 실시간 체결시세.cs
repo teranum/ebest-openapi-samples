@@ -29,6 +29,7 @@ internal class _21 : SampleBase
         // 10분후 리턴
         print("10분동안 실시간 작동중...");
         await Task.Delay(600000);
+        await api.RemoveRealtimeRequest("S3_", "005930");
 
     }
 

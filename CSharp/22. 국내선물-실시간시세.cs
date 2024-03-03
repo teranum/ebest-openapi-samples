@@ -49,6 +49,7 @@ internal class _22 : SampleBase
         // 10분후 리턴
         print("10분동안 실시간 작동중...");
         await Task.Delay(600000);
+        await api.RemoveRealtimeRequest("FC0", main_item.shcode);
 
     }
 

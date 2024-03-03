@@ -50,3 +50,35 @@ internal class _07 : SampleBase
         public CSPAQ22200OutBlock2? CSPAQ22200OutBlock2 { get; set; }
     }
 }
+
+// Output:
+/*
+CSPAQ22200OutBlock1, Field Count = 5
+| Key       | Value       |
+|-----------|-------------|
+| RecCnt    | 1           |
+| MgmtBrnNo |             |
+| AcntNo    | XXXXXXXXXXX |
+| Pwd       | ********    |
+| BalCreTp  | 0           |
+
+CSPAQ22200OutBlock2, Field Count = 37
+| Key                    | Value       |
+|------------------------|-------------|
+| RecCnt                 | 1           |
+| BrnNm                  | XXXXXXXXXXX |
+| AcntNm                 | XXXXXX      |
+| MnyOrdAbleAmt          | 0           |
+| SubstOrdAbleAmt        | 0           |
+| SeOrdAbleAmt           | 0           |
+| KdqOrdAbleAmt          | 0           |
+| CrdtPldgOrdAmt         | 0           |
+| MgnRat100pctOrdAbleAmt | 0           |
+| MgnRat35ordAbleAmt     | 0           |
+| MgnRat50ordAbleAmt     | 0           |
+| CrdtOrdAbleAmt         | 0           |
+| Dps                    | 0           |
+| SubstAmt               | 0           |
+|
+...
+*/

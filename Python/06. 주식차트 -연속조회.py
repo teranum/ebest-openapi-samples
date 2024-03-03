@@ -1,6 +1,7 @@
 ﻿import asyncio
 import ebest
 from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsecretkey 변수를 정의하고 사용하세요
+from prettytable import *
 
 async def main():
     api=ebest.OpenApi()
@@ -21,7 +22,9 @@ async def main():
     response = await api.request("t8410", request)
     
     if not response: return print(f"요청실패: {api.last_message}")
-    print(response.body)
+    
+    data1 = response.body["t8410OutBlock1"]
+    data2 = []
     
     # 연속조회
     if response.tr_cont == "Y":
@@ -30,7 +33,14 @@ async def main():
         response = await api.request("t8410", request, tr_cont=response.tr_cont, tr_cont_key=response.tr_cont_key)
         
         if not response: return print(f"연속 요청실패: {api.last_message}")
-        print(response.body)
+    
+        data2.extend(response.body["t8410OutBlock1"])
+    
+    data = data2 + data1 # 연속조회 데이터와 첫번째 조회 데이터를 합침
+    table = PrettyTable()
+    table.field_names = data[0]
+    table.add_rows([x.values() for x in data])
+    print(table)
     
     ... # 다른 작업 수행
     await api.close()
