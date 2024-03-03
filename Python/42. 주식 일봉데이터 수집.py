@@ -6,7 +6,7 @@ from app_keys import appkey, appsecretkey, stock_dir
 # stock_dir 변수에 저장할 디렉토리를 설정하세요. (ex. stock_dir = 'C:/stockdata')
 
 '''
-주식시장 전체종목 일봉데이터 수집
+주식시장 전체종목(또는 필요한 종목) 일봉데이터 수집
 '''
 async def main():
     api=ebest.OpenApi()
