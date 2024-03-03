@@ -35,7 +35,7 @@ async def main():
         # [요청] t8410 : API전용주식챠트(일주월년)
         request = {
             "t8410InBlock": {
-                "shcode": code, # 삼성전자
+                "shcode": code, # 종목코드
                 "gubun": "2", # 주기구분(2:일3:주4:월5:년)
                 "qrycnt": 500, # 요청건수(최대-압축:2000비압축:500)
                 "sdate": "", # 시작일자
