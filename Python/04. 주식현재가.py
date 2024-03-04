@@ -5,17 +5,17 @@ from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsec
 
 async def main():
     api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f"연결실패: {api.last_message}")
+    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
     
     request = {
-        "t1102InBlock": {
-            "shcode": "005930", # 삼성전자
+        't1102InBlock': {
+            'shcode': '005930', # 삼성전자
         }
     }
-    response = await api.request("t1102", request)
-    if not response: return print(f"요청실패: {api.last_message}")
+    response = await api.request('t1102', request)
+    if not response: return print(f'요청실패: {api.last_message}')
     
-    print_table(response.body["t1102OutBlock"])
+    print_table(response.body['t1102OutBlock'])
     
     ... # 다른 작업 수행
     await api.close()
@@ -23,7 +23,7 @@ async def main():
 asyncio.run(main())
 
 # Output:
-"""
+'''
 Field Count = 160
 +--------------------+------------+
 |        key         |   value    |
@@ -37,4 +37,4 @@ Field Count = 160
 |      recprice      |   73200    |
 |        avg         |   72892    |
 ...
-"""
+'''

@@ -5,18 +5,18 @@ from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsec
 
 async def main():
     api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f"연결실패: {api.last_message}")
+    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
     
     request = {
-        "CSPAQ22200InBlock1": {
-            "BalCreTp": "0",
+        'CSPAQ22200InBlock1': {
+            'BalCreTp': '0',
         }
     }
-    response = await api.request("CSPAQ22200", request)
-    if not response: return print(f"요청실패: {api.last_message}")
+    response = await api.request('CSPAQ22200', request)
+    if not response: return print(f'요청실패: {api.last_message}')
     
-    print_table(response.body["CSPAQ22200OutBlock1"])
-    print_table(response.body["CSPAQ22200OutBlock2"])
+    print_table(response.body['CSPAQ22200OutBlock1'])
+    print_table(response.body['CSPAQ22200OutBlock2'])
     
     ... # 다른 작업 수행
     await api.close()
@@ -24,7 +24,7 @@ async def main():
 asyncio.run(main())
 
 # Output:
-"""
+'''
 Field Count = 5
 +-----------+-------------+
 |    key    |    value    |
@@ -46,4 +46,4 @@ Field Count = 37
 |    SubstOrdAbleAmt     |      0      |
 |      SeOrdAbleAmt      |      0      |
 ...
-"""
+'''

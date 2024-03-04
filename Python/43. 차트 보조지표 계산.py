@@ -6,30 +6,36 @@ from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsec
 import pandas as pd
 import ta
 
+'''
+pandas와 ta 패키지를 이용한 보조지표 계산
+'''
+
 async def main():
     api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f"연결실패: {api.last_message}")
+    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
     
     # 삼성전자 일봉 데이터 500개 조회
     request = {
-        "t8410InBlock": {
-            "shcode": "005930", # 삼성전자
-            "gubun": "2", # 주기구분(2:일3:주4:월5:년)
-            "qrycnt": 500, # 요청건수(최대-압축:2000비압축:500)
-            "sdate": "", # 시작일자
-            "edate": "99999999", # 종료일자
-            "cts_date": "", # 연속일자
-            "comp_yn": "N", # 압축여부(Y:압축N:비압축)
-            "sujung": "Y", # 수정주가여부(Y:적용N:비적용)
+        't8410InBlock': {
+            'shcode': '005930', # 삼성전자
+            'gubun': '2', # 주기구분(2:일3:주4:월5:년)
+            'qrycnt': 500, # 요청건수(최대-압축:2000비압축:500)
+            'sdate': '', # 시작일자
+            'edate': '99999999', # 종료일자
+            'cts_date': '', # 연속일자
+            'comp_yn': 'N', # 압축여부(Y:압축N:비압축)
+            'sujung': 'Y', # 수정주가여부(Y:적용N:비적용)
         }
     }
-    response = await api.request("t8410", request)
-    if not response: return print(f"요청실패: {api.last_message}")
+    response = await api.request('t8410', request)
+    if not response: return print(f'요청실패: {api.last_message}')
     
     # 시간, 시가, 고가, 저가, 종가, 거래량 데이터로 변환
-    data = response.body["t8410OutBlock1"]
-    df = pd.DataFrame([list((x['date'], x['open'], x['high'], x['low'], x['close'], x['jdiff_vol'])) for x in data])
-    df.columns = ['time', 'open', 'high', 'low', 'close', 'volume']
+    data = response.body.get('t8410OutBlock1', None)
+    if data is None: return print('데이터 없음')
+    
+    df = pd.DataFrame([list((x['date'], x['open'], x['high'], x['low'], x['close'], x['jdiff_vol'])) for x in data]
+                      , columns = ['time', 'open', 'high', 'low', 'close', 'volume'])
 
     out_df = pd.DataFrame()
     
@@ -49,13 +55,12 @@ async def main():
     # 출력
     print_table(out_df)
     
-    ... # 다른 작업 수행
     await api.close()
 
 asyncio.run(main())
 
 # Output:
-"""
+'''
 Row Count = 500
 +----------+-------+---------+---------+--------------------+----------------------+--------------------+
 |   일자   |  종가 |   ma5   |   ma20  |        ma60        |         macd         |       rsi(14)      |
@@ -75,4 +80,4 @@ Row Count = 500
 | 20240228 | 73200 | 72980.0 | 73680.0 | 73996.66666666667  |  -314.4384735255444  | 47.29661874274963  |
 | 20240229 | 73400 | 73040.0 | 73635.0 | 74006.66666666667  | -282.53470351461146  | 48.628934851012275 |
 +----------+-------+---------+---------+--------------------+----------------------+--------------------+
-"""
+'''

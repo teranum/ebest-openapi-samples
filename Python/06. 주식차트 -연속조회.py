@@ -5,36 +5,39 @@ from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsec
 
 async def main():
     api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f"연결실패: {api.last_message}")
+    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
     
     request = {
-        "t8410InBlock": {
-            "shcode": "005930", # 삼성전자
-            "gubun": "2", # 주기구분(2:일3:주4:월5:년)
-            "qrycnt": 100, # 요청건수(최대-압축:2000비압축:500)
-            "sdate": "", # 시작일자
-            "edate": "99999999", # 종료일자
-            "cts_date": "", # 연속일자
-            "comp_yn": "N", # 압축여부(Y:압축N:비압축)
-            "sujung": "Y", # 수정주가여부(Y:적용N:비적용)
+        't8410InBlock': {
+            'shcode': '005930', # 삼성전자
+            'gubun': '2', # 주기구분(2:일3:주4:월5:년)
+            'qrycnt': 100, # 요청건수(최대-압축:2000비압축:500)
+            'sdate': '', # 시작일자
+            'edate': '99999999', # 종료일자
+            'cts_date': '', # 연속일자
+            'comp_yn': 'N', # 압축여부(Y:압축N:비압축)
+            'sujung': 'Y', # 수정주가여부(Y:적용N:비적용)
         }
     }
-    response = await api.request("t8410", request)
-    if not response: return print(f"요청실패: {api.last_message}")
+    response = await api.request('t8410', request)
+    if not response: return print(f'요청실패: {api.last_message}')
     
-    data = response.body["t8410OutBlock1"]
+    all_data = response.body.get('t8410OutBlock1', None)
+    if all_data is None: return print('데이터 없음')
     
     # 연속조회
-    if response.tr_cont == "Y":
+    if response.tr_cont == 'Y':
         await asyncio.sleep(1) # 1초 대기
-        request["t8410InBlock"]["cts_date"] = response.body["t8410OutBlock"]["cts_date"]
-        response = await api.request("t8410", request, tr_cont=response.tr_cont, tr_cont_key=response.tr_cont_key)
+        request['t8410InBlock']['cts_date'] = response.body['t8410OutBlock']['cts_date']
+        response = await api.request('t8410', request, tr_cont=response.tr_cont, tr_cont_key=response.tr_cont_key)
         if not response:
-            print(f"연속 요청실패: {api.last_message}")
+            print(f'연속 요청실패: {api.last_message}')
         else:
-            data = response.body["t8410OutBlock1"] + data # 연속조회 데이터와 첫번째 조회 데이터를 합침
+            data = response.body.get('t8410OutBlock1', None)
+            if data is None: print('연속 데이터 없음')
+            all_data = data + all_data # 연속조회 데이터와 첫번째 조회 데이터를 합침
     
-    print_table(data)
+    print_table(all_data)
     
     ... # 다른 작업 수행
     await api.close()
@@ -42,7 +45,7 @@ async def main():
 asyncio.run(main())
 
 # Output:
-"""
+'''
 Row Count = 200
 +----------+-------+-------+-------+-------+-----------+---------+---------+------+----------+-----------+------+
 |   date   |  open |  high |  low  | close | jdiff_vol |  value  | jongchk | rate | pricechk | ratevalue | sign |
@@ -63,4 +66,4 @@ Row Count = 200
 | 20240228 | 72900 | 73900 | 72800 | 73200 |  11684297 |  858249 |    0    | 0.00 |    0     |     0     |  2   |
 | 20240229 | 72600 | 73400 | 72000 | 73400 |  20502140 | 1494456 |    0    | 0.00 |    0     |     0     |  2   |
 +----------+-------+-------+-------+-------+-----------+---------+---------+------+----------+-----------+------+
-"""
+'''

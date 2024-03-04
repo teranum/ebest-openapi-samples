@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>83ae92fd-f9e4-418a-8111-6acf8c1a4ad6</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>41. 코스피 주가 출력.py</StartupFile>
+    <StartupFile>44. 주식 이평매매 백테스팅.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -43,6 +43,7 @@
     <Compile Include="31. qt-주식정보조회.py" />
     <Compile Include="32. qt-주식계좌조회.py" />
     <Compile Include="42. 주식 일봉데이터 수집.py" />
+    <Compile Include="44. 주식 이평매매 백테스팅.py" />
     <Compile Include="common.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

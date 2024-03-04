@@ -8,7 +8,7 @@ def print_table(data):
         table = PrettyTable(['key','value'])
         fields = data.items();
         table.add_rows([list(x) for x in fields])
-        print(f"Field Count = {len(fields)}")
+        print(f'Field Count = {len(fields)}')
         print(table)
     elif isinstance(data, list):
         if len(data) == 0: return
@@ -16,20 +16,20 @@ def print_table(data):
             table = PrettyTable()
             table.field_names = data[0]
             table.add_rows([x.values() for x in data])
-            print(f"Row Count = {len(data)}")
+            print(f'Row Count = {len(data)}')
             print(table)
         else:
             table = PrettyTable(['value'])
             for x in data:
                 table.add_row([x])
                 pass
-            print(f"Row Count = {len(data)}")
+            print(f'Row Count = {len(data)}')
             print(table)
     elif isinstance(data, DataFrame):
         table = PrettyTable()
         table.field_names = data.columns
         table.add_rows(data.values)
-        print(f"Row Count = {len(data)}")
+        print(f'Row Count = {len(data)}')
         print(table)
     pass
 

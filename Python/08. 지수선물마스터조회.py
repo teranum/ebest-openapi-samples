@@ -5,17 +5,17 @@ from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsec
 
 async def main():
     api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f"연결실패: {api.last_message}")
+    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
     
     request = {
-        "t8432InBlock": {
-            "gubun": "0",
+        't8432InBlock': {
+            'gubun': '0',
         }
     }
-    response = await api.request("t8432", request)
-    if not response: return print(f"요청실패: {api.last_message}")
+    response = await api.request('t8432', request)
+    if not response: return print(f'요청실패: {api.last_message}')
     
-    print_table(response.body["t8432OutBlock"])
+    print_table(response.body['t8432OutBlock'])
     
     ... # 다른 작업 수행
     await api.close()
@@ -24,7 +24,7 @@ asyncio.run(main())
 
 
 # Output:
-"""
+'''
 Row Count = 13
 +--------------+----------+--------------+------------+------------+-----------+----------+---------+----------+
 |    hname     |  shcode  |   expcode    | uplmtprice | dnlmtprice | jnilclose | jnilhigh | jnillow | recprice |
@@ -43,4 +43,4 @@ Row Count = 13
 | F SP 03-2512 | 401V3WCS | KR4401V3WCS8 |   30.45    |   -5.25    |    0.00   |   0.00   |   0.00  |   0.00   |
 | F SP 03-2612 | 401V36CS | KR4401V36CS2 |   35.80    |    0.10    |    0.00   |   0.00   |   0.00  |   0.00   |
 +--------------+----------+--------------+------------+------------+-----------+----------+---------+----------+
-"""
+'''

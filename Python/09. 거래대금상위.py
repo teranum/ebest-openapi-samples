@@ -5,25 +5,25 @@ from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsec
 
 async def main():
     api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f"연결실패: {api.last_message}")
+    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
     
     request = {
-        "t1463InBlock": {
-            "gubun": "0", # 0:전체, 1:코스피, 2:코스닥
-            "jnilgubun": "0", # 0 : 당일 1 : 전일
-            "jc_num": 0, # 대상제외
-            "sprice": 10000, # 현재가 >= sprice
-            "eprice": 1000000, # 현재가 <= eprice
-            "volume": 1000000, # 거래량 >= volume
-            "idx": 0, # 처음 조회시는 0 연속 조회시에 이전 조회한 OutBlock의 idx 값으로 설정
-            "jc_num2": 0, # 대상제외2
+        't1463InBlock': {
+            'gubun': '0', # 0:전체, 1:코스피, 2:코스닥
+            'jnilgubun': '0', # 0 : 당일 1 : 전일
+            'jc_num': 0, # 대상제외
+            'sprice': 10000, # 현재가 >= sprice
+            'eprice': 1000000, # 현재가 <= eprice
+            'volume': 1000000, # 거래량 >= volume
+            'idx': 0, # 처음 조회시는 0 연속 조회시에 이전 조회한 OutBlock의 idx 값으로 설정
+            'jc_num2': 0, # 대상제외2
         }
     }
-    response = await api.request("t1463", request)
-    if not response: return print(f"요청실패: {api.last_message}")
+    response = await api.request('t1463', request)
+    if not response: return print(f'요청실패: {api.last_message}')
     
-    print_table(response.body["t1463OutBlock"])
-    print_table(response.body["t1463OutBlock1"])
+    print_table(response.body['t1463OutBlock'])
+    print_table(response.body['t1463OutBlock1'])
     
     ... # 다른 작업 수행
     await api.close()
@@ -31,7 +31,7 @@ async def main():
 asyncio.run(main())
 
 # Output:
-"""
+'''
 Field Count = 1
 +-----+-------+
 | key | value |
@@ -49,4 +49,4 @@ Row Count = 20
 |      알테오젠      | 160600 |  5   |  3900  | -2.37 | 2367010  |  398407 |   339506  |  117.35  | 196170 |        |  2161844   |
 |       NAVER        | 195000 |  5   |  9000  | -4.41 | 2016957  |  397064 |   120373  |  329.86  | 035420 |        |   597421   |
 ...
-"""
+'''

@@ -1,4 +1,4 @@
-﻿"""
+﻿'''
 패키지 설치
 pip install asyncio
 pip install ebest
@@ -18,13 +18,13 @@ ebest 모듈사용
         appsecretkey:str - 앱시크릿키
         reutrn: bool - 로그인 성공여부 (성공: True, 실패: False)
         
-    request(tr_cd:str, data:dict, *, path:str=None, tr_cont:str="N", tr_cont_key:str="0") -> None: 요청
+    request(tr_cd:str, data:dict, *, path:str=None, tr_cont:str='N', tr_cont_key:str='0') -> None: 요청
         tr_cd:str - TR 코드
         data:dict - 요청 데이터
         * - path, tr_cont, tr_cont_key는 옵션(기본값으로 설정됨)
-        path:str - PATH경로, 기본값: None, 설정 필요시 URL값으로 세팅 ex) "/stock/market-data"
-        tr_cont:str - 연속조회여부 (연속조회: "Y", 단순조회: "N"), 기본값: "N"
-        tr_cont_key:str - 연속조회키 (연속조회여부가 "Y"인 경우 필수 세팅), 기본값: "0"
+        path:str - PATH경로, 기본값: None, 설정 필요시 URL값으로 세팅 ex) '/stock/market-data'
+        tr_cont:str - 연속조회여부 (연속조회: 'Y', 단순조회: 'N'), 기본값: 'N'
+        tr_cont_key:str - 연속조회키 (연속조회여부가 'Y'인 경우 필수 세팅), 기본값: '0'
         return: 응답 데이터 (dict), 요청 실패시 None
     
     add_realtime(tr_cd:str, tr_key:str) -> bool: 실시간 등록
@@ -51,8 +51,8 @@ ebest 모듈사용
 샘플 코드 이용
 1. 샘플폴더에 app_keys.py 파일 생성
 2. app_keys.py 파일에 아래와 같이 변수 세팅
-    appkey = "발급받은 앱Key"
-    appsecretkey = "발급받은 앱 비밀Key"
+    appkey = '발급받은 앱Key'
+    appsecretkey = '발급받은 앱 비밀Key'
 3. 샘플코드 실행
 
 01 ~ 샘플코드는 로그인, 계좌조회, 시세 및 차트조회
@@ -60,4 +60,6 @@ ebest 모듈사용
 20 ~ 웹소켓 을 이용한 실시간 시세
 30 ~ PyQt6를 이용한 GUI 샘플코드
 40 ~ 기타 샘플코드
-"""
+
+
+'''

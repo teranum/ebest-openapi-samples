@@ -9,41 +9,41 @@ from app_keys import appkey, appsecretkey
 '''
 async def main():
     api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f"연결실패: {api.last_message}")
+    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
     
-    print("전체 코스피 일봉데이터를 불러온 후 차트(종가라인)로 출력합니다.")
+    print('전체 코스피 일봉데이터를 불러온 후 차트(종가라인)로 출력합니다.')
 
-    cts_date = ""
-    tr_cont = "N"
-    tr_cont_key = "0"
+    cts_date = ''
+    tr_cont = 'N'
+    tr_cont_key = '0'
     req_count = 0
     all_data = []
     cont_is_Y = True
     while cont_is_Y:
         req_count += 1
-        print(f"요청횟수: {req_count}")
+        print(f'요청횟수: {req_count}')
         # [요청] t8419 : 업종챠트(일주월)
         request = {
-            "t8419InBlock": {
-                "shcode": "001",
-                "gubun": "2",
-                "qrycnt": 500,
-                "sdate": "",
-                "edate": "99999999",
-                "cts_date": cts_date,
-                "comp_yn": "N",
+            't8419InBlock': {
+                'shcode': '001',
+                'gubun': '2',
+                'qrycnt': 500,
+                'sdate': '',
+                'edate': '99999999',
+                'cts_date': cts_date,
+                'comp_yn': 'N',
             },
         }
-        response = await api.request("t8419", request, tr_cont = tr_cont, tr_cont_key = tr_cont_key)
+        response = await api.request('t8419', request, tr_cont = tr_cont, tr_cont_key = tr_cont_key)
         tr_cont = response.tr_cont;
         tr_cont_key = response.tr_cont_key;
-        cts_date = response.body["t8419OutBlock"]["cts_date"];
+        cts_date = response.body['t8419OutBlock']['cts_date'];
         if not response:
-           print(f"요청실패: {api.last_message}")
+           print(f'요청실패: {api.last_message}')
            break
-        all_data = response.body["t8419OutBlock1"] + all_data
+        all_data = response.body['t8419OutBlock1'] + all_data
         await asyncio.sleep(1)
-        cont_is_Y =  tr_cont == "Y"
+        cont_is_Y =  tr_cont == 'Y'
         pass
 
     print_table(all_data)
@@ -59,7 +59,7 @@ asyncio.run(main())
 
 
 # Output:
-"""
+'''
 전체 코스피 일봉데이터를 불러온 후 차트(종가라인)로 출력합니다.
 요청횟수: 1
 요청횟수: 2
@@ -96,4 +96,4 @@ Row Count = 9122
 | 20240229 | 2643.48 | 2647.56 | 2628.62 | 2642.36 |   496064  | 12975398 |
 +----------+---------+---------+---------+---------+-----------+----------+
 차트출력
-"""
+'''
