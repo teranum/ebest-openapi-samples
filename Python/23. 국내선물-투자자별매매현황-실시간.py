@@ -34,7 +34,7 @@ async def main():
     # 10분후 실시간 시세 중지
     print('10분동안 실시간 작동중...');
     await asyncio.sleep(600)
-    await api.remove_realtime('BM_', 900)
+    await api.remove_realtime('BM_', '900')
     await asyncio.sleep(1)
     
     ... # 다른 작업 수행
