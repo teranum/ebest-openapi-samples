@@ -34,8 +34,10 @@ async def main():
             print(f'연속 요청실패: {api.last_message}')
         else:
             data = response.body.get('t8410OutBlock1', None)
-            if data is None: print('연속 데이터 없음')
-            all_data = data + all_data # 연속조회 데이터와 첫번째 조회 데이터를 합침
+            if data != None:
+                all_data = data + all_data # 연속조회 데이터와 첫번째 조회 데이터를 합침
+            else:
+                print('연속 데이터 없음')
     
     print_table(all_data)
     

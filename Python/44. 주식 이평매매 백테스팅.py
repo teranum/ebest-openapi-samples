@@ -63,7 +63,6 @@ async def main():
         익절횟수 = 0
         진입횟수 = 0
 
-        plot_data = []
         for i in range(120, length, 1):
             ma5 = calc_df['ma5'][i]
             ma20 = calc_df['ma20'][i]
@@ -121,8 +120,6 @@ async def main():
                             break
                         pass
             
-            계좌수익율 = (예수금 + 보유수량 * 진입가격 - 초기투자금) / 초기투자금 * 100.00
-            plot_data.append((종가, 계좌수익율));
             pass
     
         최종평가금 = 예수금 + calc_df['종가'][length-1] * 보유수량
