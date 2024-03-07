@@ -15,7 +15,7 @@ async def main():
         readcnt = int(input(f'요청건수를 입력하세요(100, 500, 1000, ...):'))
 
         # 해외선물 분 차트 데이터 조회용 함수 호출
-        df = await GetFutureStockChartData(api, shcode, ncnt, readcnt)
+        df = await GetWorldFutureMinuteChartData(api, shcode, ncnt, readcnt)
         print_table(df)
         pass # 무한 반복으로 다른 종목 데이터 불러온다
     
@@ -23,7 +23,7 @@ async def main():
 
 
 
-async def GetFutureStockChartData(api, shcode, ncnt, readcnt):
+async def GetWorldFutureMinuteChartData(api, shcode, ncnt, readcnt):
     '''
     해외선물 분 차트 데이터 조회 함수
     api: ebest api 객체
