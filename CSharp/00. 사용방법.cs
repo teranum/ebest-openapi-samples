@@ -22,8 +22,9 @@
 20 ~ 웹소켓 을 이용한 실시간 시세
 40 ~ 기타 샘플코드
 
-모델클래스는 참조방법 (2가지)
-    1. 샘플코드 양식으로 필요한 TR에 해당되는 클래스를 직접 코딩 하거나
-    2. nuget ebest.OpenAPI.Models 를 이용 할수 있다, 전체 TR에 해당되는 클래스가 포함되어 있음
-       이 경우 샘플코드에 using ebest.OpenAPI.Models; 추가, 또는 필요한 TR에 해당되는 클래스를 복사해서 사용
+* 샘플코드에 포함되지 않은 TR모델클래스 참조방법 (3가지)
+    1. 샘플코드 Models.cs 양식으로 필요한 TR에 해당되는 블록과 모델 클래스를 직접 코딩 하거나
+    2. 이베스트 OpenApi용 DevCenter(오픈소스) https://github.com/teranum/eBEST.OpenApi.DevCenter 에서 릴리즈버전 설치후 모델소스를 참조
+    3. 또는 nuget ebest.OpenAPI.Models 를 이용, 이베스트 전체 TR에 해당되는 클래스가 포함되어 있음
+       이 경우 코드에 using ebest.OpenAPI.Models; 추가, 또는 필요한 TR에 해당되는 클래스만 개발 프로젝트에 복사해서 사용
 */
