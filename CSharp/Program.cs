@@ -5,7 +5,7 @@ using CSharp;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-await _09.Main();
+await _27.Main();
 
 namespace CSharp
 {
@@ -48,5 +48,11 @@ namespace CSharp
             Console.WriteLine($"{type.Name}, Field Count = {keyValuePairs.Count}");
             ConsoleTable.From(keyValuePairs).Write(Format.MarkDown);
         }
+
+        public static async Task<string> GetInputAsync(string msg) => await Task.Run(()=>
+        {
+            Console.Write(msg);
+            return Console.ReadLine() ?? string.Empty;
+        });
     }
 }

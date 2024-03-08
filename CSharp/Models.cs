@@ -201,4 +201,53 @@ namespace CSharp
 
     // BM_ : 업종별투자자별매매현황
     public record BM_OutBlock(string tjjcode, string tjjtime, int msvolume, int mdvolume, int msvol, int p_msvol, int msvalue, int mdvalue, int msval, int p_msval, string upcode);
+
+    // o3101 : 해외선물마스터조회-API용
+    public record o3101InBlock(string gubun);
+    public record o3101OutBlock(string Symbol, string SymbolNm, string ApplDate, string BscGdsCd, string BscGdsNm, string ExchCd, string ExchNm, string CrncyCd, string NotaCd, double UntPrc, double MnChgAmt, double RgltFctr, double CtrtPrAmt, string GdsCd, string LstngYr, string LstngM, double EcPrc, string DlStrtTm, string DlEndTm, string DlPsblCd, string MgnCltCd, double OpngMgn, double MntncMgn, double OpngMgnR, double MntncMgnR, int DotGb);
+
+    [Path("/overseas-futureoption/market-data")]
+    public class o3101 : TrBase
+    {
+        // 요청
+        public o3101InBlock? o3101InBlock { get; set; }
+
+        // 응답
+        public o3101OutBlock[]? o3101OutBlock { get; set; }
+    }
+
+    // o3105 : 해외선물현재가(종목정보)조회-API용
+    public record o3105InBlock(string symbol);
+    public record o3105OutBlock(string Symbol, string SymbolNm, string ApplDate, string BscGdsCd, string BscGdsNm, string ExchCd, string ExchNm, string EcCd, string CrncyCd, string NotaCd, double UntPrc, double MnChgAmt, double RgltFctr, double CtrtPrAmt, int LstngMCnt, string GdsCd, string MrktCd, string EminiCd, string LstngYr, string LstngM, int SeqNo, string LstngDt, string MtrtDt, string FnlDlDt, string FstTrsfrDt, double EcPrc, string DlDt, string DlStrtTm, string DlEndTm, string OvsStrDay, string OvsStrTm, string OvsEndDay, string OvsEndTm, string DlPsblCd, string MgnCltCd, double OpngMgn, double MntncMgn, double OpngMgnR, double MntncMgnR, int DotGb, int TimeDiff, string OvsDate, string KorDate, string TrdTm, string RcvTm, double TrdP, long TrdQ, long TotQ, double TrdAmt, double TotAmt, double OpenP, double HighP, double LowP, double CloseP, double YdiffP, string YdiffSign, string Cgubun, double Diff);
+
+    [Path("/overseas-futureoption/market-data")]
+    public class o3105 : TrBase
+    {
+        // 요청
+        public o3105InBlock? o3105InBlock { get; set; }
+
+        // 응답
+        public o3105OutBlock? o3105OutBlock { get; set; }
+    }
+
+    // o3123 : 해외선물옵션차트(분)-API용
+    public record o3123InBlock(string mktgb, string shcode, int ncnt, int readcnt, string cts_date, string cts_time);
+    public record o3123OutBlock(string shcode, int timediff, int readcnt, string cts_date, string cts_time);
+    public record o3123OutBlock1(string date, string time, double open, double high, double low, double close, long volume);
+
+    [Path("/overseas-futureoption/market-data")]
+    public class o3123 : TrBase
+    {
+        // 요청
+        public o3123InBlock? o3123InBlock { get; set; }
+
+        // 응답
+        public o3123OutBlock? o3123OutBlock { get; set; }
+        public o3123OutBlock1[]? o3123OutBlock1 { get; set; }
+    }
+
+    // OVC : 해외선물 현재가체결
+    public record OVCOutBlock(string symbol, string ovsdate, string kordate, string trdtm, string kortm, double curpr, double ydiffpr, string ydiffSign, double open, double high, double low, double chgrate, long trdq, string totq, string cgubun, string mdvolume, string msvolume, string ovsmkend);
+
+
 }
