@@ -1,6 +1,4 @@
-﻿using eBEST.OpenApi;
-
-namespace CSharp;
+﻿namespace CSharp;
 
 internal class _26 : SampleBase
 {
@@ -13,7 +11,7 @@ internal class _26 : SampleBase
         int.TryParse(str_readcnt, out int readcnt);
 
         // 해외선물 분 차트 데이터 조회용 함수 호출
-        var (ErrMsg, Datas) = await GetWorldFutureMinuteChartData(api, shcode, ncnt, readcnt
+        var (ErrMsg, Datas) = await GetWorldFutureMinuteChartData(shcode, ncnt, readcnt
             , progress_action: (frameCount, receivedCount) =>
             {
                 print($"차트조회중... {frameCount}개 프레임, {receivedCount}개 수신완료");
@@ -35,7 +33,7 @@ internal class _26 : SampleBase
     /// <param name="DelayTime">요청간 딜레이 시간(ms), 기본값:1000ms</param>
     /// <param name="progress_action">프레임 수신시 콜백함수 (Param인자: 수신된 프레임수, 수신된 데이터 길이 합)</param>
     /// <returns></returns>
-    public static async Task<(string ErrMsg, o3123OutBlock1[] Datas)> GetWorldFutureMinuteChartData(EBestOpenApi api, string shcode, int ncnt, int ReqCount = 500, int DelayTime = 1000
+    public async Task<(string ErrMsg, o3123OutBlock1[] Datas)> GetWorldFutureMinuteChartData(string shcode, int ncnt, int ReqCount = 500, int DelayTime = 1000
         , Action<int, int>? progress_action = null)
     {
         string cts_date = string.Empty;

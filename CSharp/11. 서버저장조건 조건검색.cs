@@ -21,7 +21,7 @@ internal class _11 : SampleBase
         print(tr_data.t1866OutBlock);
         print(tr_data.t1866OutBlock1);
 
-        if (tr_data.t1866OutBlock1 == null)
+        if (tr_data.t1866OutBlock1 == null || tr_data.t1866OutBlock.result_count == 0)
         {
             print("서버에 저장된 조건검색식이 없습니다.");
             return;

@@ -1,13 +1,11 @@
-﻿using eBEST.OpenApi;
-
-namespace CSharp;
+﻿namespace CSharp;
 
 internal class _06 : SampleBase
 {
     public override async Task ActionImplement()
     {
         // 주식차트조회 확장함수 호출 (삼성전자, 일봉, 1500개)
-        var (ErrMsg, Datas) = await GetStockChartDataAsync(api, "005930", "2", 1500
+        var (ErrMsg, Datas) = await GetStockChartDataAsync("005930", "2", 1500
             , progress_action: (frameCount, receivedCount) =>
         {
             print($"차트조회중... {frameCount}개 프레임, {receivedCount}개 수신완료");
@@ -19,7 +17,7 @@ internal class _06 : SampleBase
         print(Datas);
     }
 
-    public static async Task<(string ErrMsg, t8410OutBlock1[] Datas)> GetStockChartDataAsync(EBestOpenApi api, string shcode, string gubun, int ReqCount = 500, int DelayTime = 1000
+    public async Task<(string ErrMsg, t8410OutBlock1[] Datas)> GetStockChartDataAsync(string shcode, string gubun, int ReqCount = 500, int DelayTime = 1000
         , Action<int, int>? progress_action = null)
     {
         string cts_date = string.Empty;

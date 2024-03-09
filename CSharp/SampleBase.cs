@@ -42,10 +42,9 @@ namespace CSharp
             }
 
             var type = array.GetType().GetElementType()!;
-            ConsoleColor dftForeColor = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine($"{type.Name}[], Field Count = {type.GetProperties().Length}, Data Count = {array.Count()}");
-            Console.ForegroundColor = dftForeColor;
+            Console.ForegroundColor = ConsoleColor.Gray;
             ConsoleTable.From(array).Configure(o => o.NumberAlignment = Alignment.Right).Write(Format.MarkDown);
         }
 
@@ -64,10 +63,9 @@ namespace CSharp
                 keyValuePairs.Add(new(prop.Name, prop.GetValue(data) ?? string.Empty));
             }
 
-            ConsoleColor dftForeColor = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine($"{type.Name}, Field Count = {keyValuePairs.Count}");
-            Console.ForegroundColor = dftForeColor;
+            Console.ForegroundColor = ConsoleColor.Gray;
             ConsoleTable.From(keyValuePairs).Write(Format.MarkDown);
         }
 
