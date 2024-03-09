@@ -1,21 +1,9 @@
-﻿using eBEST.OpenApi;
-
-namespace CSharp;
+﻿namespace CSharp;
 
 internal class _11 : SampleBase
 {
-    public static async Task Main()
+    public override async Task ActionImplement()
     {
-        // API 생성
-        var api = new EBestOpenApi();
-        // 로그인
-        if (!await api.ConnectAsync(Secret.AppKey, Secret.AppSecretKey))
-        {
-            print($"연결실패: {api.LastErrorMessage}");
-            return;
-        }
-        print($"연결성공, 접속서버: {(api.ServerType == EBestOpenApi.SERVER_TYPE.모의투자 ? "모의투자" : "실투자")}");
-
         // [요청] t1866 : 서버저장조건리스트조회(API)
         t1866 tr_data = new()
         {
@@ -70,3 +58,34 @@ internal class _11 : SampleBase
         print(tr_data_cond.t1859OutBlock1);
     }
 }
+
+// Output:
+/*
+t1866OutBlock, Field Count = 3
+| Key          | Value |
+|--------------|-------|
+| result_count | 1     |
+| cont         |       |
+| contkey      |       |
+
+t1866OutBlock1[], Field Count = 3, Data Count = 1
+| query_index  | group_name | query_name |
+|--------------|------------|------------|
+| XXXXXXXX0001 | 나의전략   | 조건전략   |
+
+조건검색식index (0~0)를 입력하세요:0
+t1859OutBlock, Field Count = 3
+| Key          | Value  |
+|--------------|--------|
+| result_count | 4     |
+| result_time  | 142055 |
+| text         |        |
+
+t1859OutBlock1[], Field Count = 7, Data Count = 34
+| shcode | hname                           | price | sign | change |  diff |  volume |
+|--------|---------------------------------|-------|------|--------|-------|---------|
+| 002390 | 한독                            | 14510 | 2    |    710 |  5.14 |   80702 |
+| 002795 | 아모레G우                       | 10360 | 5    |     60 | -0.58 |    2816 |
+| 003200 | 일신방직                        |  9090 | 2    |    140 |  1.56 |   46689 |
+| 003475 | 유안타증권우                    |  2650 | 5    |     30 | -1.12 |    8770 |
+*/

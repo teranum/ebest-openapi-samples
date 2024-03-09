@@ -1,21 +1,9 @@
-﻿using eBEST.OpenApi;
-
-namespace CSharp;
+﻿namespace CSharp;
 
 internal class _10 : SampleBase
 {
-    public static async Task Main()
+    public override async Task ActionImplement()
     {
-        // API 생성
-        var api = new EBestOpenApi();
-        // 로그인
-        if (!await api.ConnectAsync(Secret.AppKey, Secret.AppSecretKey))
-        {
-            print($"연결실패: {api.LastErrorMessage}");
-            return;
-        }
-        print($"연결성공, 접속서버: {(api.ServerType == EBestOpenApi.SERVER_TYPE.모의투자 ? "모의투자" : "실투자")}");
-
         // [요청] t1866 : 서버저장조건리스트조회(API)
         t1866 tr_data = new()
         {
@@ -34,3 +22,19 @@ internal class _10 : SampleBase
         print(tr_data.t1866OutBlock1);
     }
 }
+
+// Output:
+/*
+t1866OutBlock, Field Count = 3
+| Key          | Value |
+|--------------|-------|
+| result_count | 1     |
+| cont         |       |
+| contkey      |       |
+
+t1866OutBlock1[], Field Count = 3, Data Count = 1
+| query_index  | group_name | query_name |
+|--------------|------------|------------|
+| XXXXXXXX0001 | 나의전략   | 조건전략   |
+ 
+* */

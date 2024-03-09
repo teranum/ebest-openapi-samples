@@ -1,22 +1,11 @@
-﻿using eBEST.OpenApi;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace CSharp;
 
 internal class _21 : SampleBase
 {
-    public static async Task Main()
+    public override async Task ActionImplement()
     {
-        // API 생성
-        var api = new EBestOpenApi();
-        // 로그인
-        if (!await api.ConnectAsync(Secret.AppKey, Secret.AppSecretKey))
-        {
-            print($"연결실패: {api.LastErrorMessage}");
-            return;
-        }
-        print($"연결성공, 접속서버: {(api.ServerType == EBestOpenApi.SERVER_TYPE.모의투자 ? "모의투자" : "실투자")}");
-
         api.OnRealtimeEvent += Api_OnRealtimeEvent;
 
         // [실시간 시세 요청] S3_ : KOSPI체결

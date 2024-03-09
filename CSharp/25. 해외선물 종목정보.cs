@@ -1,40 +1,25 @@
-﻿using eBEST.OpenApi;
-
-namespace CSharp;
+﻿namespace CSharp;
 
 internal class _25 : SampleBase
 {
-    public static async Task Main()
+    public override async Task ActionImplement()
     {
-        // API 생성
-        var api = new EBestOpenApi();
-        // 로그인
-        if (!await api.ConnectAsync(Secret.AppKey, Secret.AppSecretKey))
+        var shcode = await GetInputAsync("해외선물 종목코드를 입력하세요 (ex HSIH24):");
+        // [요청] o3105 : 해외선물현재가(종목정보)조회-API용
+        o3105 tr_data = new()
         {
-            print($"연결실패: {api.LastErrorMessage}");
+            o3105InBlock = new(shcode),
+        };
+        await api.GetTRData(tr_data);
+        if (tr_data.o3105OutBlock is null)
+        {
+            // 오류 처리
+            print(tr_data.rsp_cd.Length > 0 ? $"{tr_data.rsp_cd}-{tr_data.rsp_msg}" : api.LastErrorMessage);
             return;
         }
-        print($"연결성공, 접속서버: {(api.ServerType == EBestOpenApi.SERVER_TYPE.모의투자 ? "모의투자" : "실투자")}");
 
-        while (true)
-        {
-            var shcode = await GetInputAsync("해외선물 종목코드를 입력하세요 (ex HSIH24):");
-            // [요청] o3105 : 해외선물현재가(종목정보)조회-API용
-            o3105 tr_data = new()
-            {
-                o3105InBlock = new(shcode),
-            };
-            await api.GetTRData(tr_data);
-            if (tr_data.o3105OutBlock is null)
-            {
-                // 오류 처리
-                print(tr_data.rsp_cd.Length > 0 ? $"{tr_data.rsp_cd}-{tr_data.rsp_msg}" : api.LastErrorMessage);
-                return;
-            }
-
-            // tr_data.o3105OutBlock 데이터 처리
-            print(tr_data.o3105OutBlock);
-        }
+        // tr_data.o3105OutBlock 데이터 처리
+        print(tr_data.o3105OutBlock);
     }
 }
 

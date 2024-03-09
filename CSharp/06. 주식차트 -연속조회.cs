@@ -4,20 +4,10 @@ namespace CSharp;
 
 internal class _06 : SampleBase
 {
-    public static async Task Main()
+    public override async Task ActionImplement()
     {
-        // API 생성
-        var api = new EBestOpenApi();
-        // 로그인
-        if (!await api.ConnectAsync(Secret.AppKey, Secret.AppSecretKey))
-        {
-            print($"연결실패: {api.LastErrorMessage}");
-            return;
-        }
-        print($"연결성공, 접속서버: {(api.ServerType == EBestOpenApi.SERVER_TYPE.모의투자 ? "모의투자" : "실투자")}");
-
         // 주식차트조회 확장함수 호출 (삼성전자, 일봉, 1500개)
-        var (ErrMsg, Datas) = await GetStockChartDataAsync(api, "005930", CandleGubun.일, 1500
+        var (ErrMsg, Datas) = await GetStockChartDataAsync(api, "005930", "2", 1500
             , progress_action: (frameCount, receivedCount) =>
         {
             print($"차트조회중... {frameCount}개 프레임, {receivedCount}개 수신완료");
@@ -29,29 +19,13 @@ internal class _06 : SampleBase
         print(Datas);
     }
 
-    public static async Task<(string ErrMsg, t8410OutBlock1[] Datas)> GetStockChartDataAsync(EBestOpenApi api, string shcode, CandleGubun gubun, int ReqCount = 500, int DelayTime = 1000
+    public static async Task<(string ErrMsg, t8410OutBlock1[] Datas)> GetStockChartDataAsync(EBestOpenApi api, string shcode, string gubun, int ReqCount = 500, int DelayTime = 1000
         , Action<int, int>? progress_action = null)
     {
-        if (gubun < CandleGubun.일 || gubun > CandleGubun.년)
-        {
-            return ("잘못된 캔들구분, 현재 샘플코드는 분/틱을 지원하지 않습니다.", []);
-        }
-
         string cts_date = string.Empty;
         string tr_cont = "N";
         string tr_cont_key = string.Empty;
         int ReceivedCount = 0;
-
-        string str_gubun = gubun switch
-        {
-            CandleGubun.분 => "0",
-            CandleGubun.틱 => "1",
-            CandleGubun.일 => "2",
-            CandleGubun.주 => "3",
-            CandleGubun.월 => "4",
-            CandleGubun.년 => "5",
-            _ => "2",
-        };
 
         string errMsg = string.Empty;
         List<t8410OutBlock1[]> DataFrames = [];
@@ -68,7 +42,7 @@ internal class _06 : SampleBase
             }
             t8410 tr_data = new()
             {
-                t8410InBlock = new(shcode, str_gubun, _inner_req_count, "", "99999999", cts_date, "N", "Y"),
+                t8410InBlock = new(shcode, gubun, _inner_req_count, "", "99999999", cts_date, "N", "Y"),
                 tr_cont = tr_cont,
                 tr_cont_key = tr_cont_key,
             };

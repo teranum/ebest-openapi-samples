@@ -1,58 +1,32 @@
 ﻿// See https://aka.ms/new-console-template for more information
-
-using ConsoleTables;
+global using eBEST.OpenApi.Models;
 using CSharp;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
-await _27.Main();
+await new _01().Main();
 
-namespace CSharp
+// 샘플 클래스 실행, 무한반복
+while (true)
 {
-    public enum CandleGubun
+    // 샘플 넘버 입력
+    ConsoleColor dftForeColor = Console.ForegroundColor;
+    Console.ForegroundColor = ConsoleColor.DarkGreen; 
+    Console.WriteLine();
+    Console.Write("샘플넘버 입력(02~): ");
+    var input = Console.ReadLine();
+    Console.ForegroundColor = dftForeColor;
+
+    if (string.IsNullOrEmpty(input)) break;
+    int.TryParse(input, out var number);
+    if (number == 0) continue;
+
+    // 샘플 클래스 찾기
+    var type = Type.GetType($"CSharp._{number:00}");
+    if (type == null)
     {
-        틱, 분, 일, 주, 월, 년,
+        Console.WriteLine("잘못된 샘플넘버 입니다.");
+        continue;
     }
 
-    internal class SampleBase
-    {
-        protected static JsonSerializerOptions _jsonOptions = new() { NumberHandling = JsonNumberHandling.AllowReadingFromString };
-        public static void print<T>(IEnumerable<T>? array)
-        {
-            if (array == null) return;
-            if (array is string text)
-            {
-                Console.WriteLine(text);
-                return;
-            }
-
-            var type = array.GetType().GetElementType()!;
-            Console.WriteLine($"{type.Name}[], Field Count = {type.GetProperties().Length}, Data Count = {array.Count()}");
-            ConsoleTable.From(array).Configure(o => o.NumberAlignment = Alignment.Right).Write(Format.MarkDown);
-        }
-        public static void print(object? data)
-        {
-            if (data is string text)
-            {
-                Console.WriteLine(text);
-                return;
-            }
-            if (data == null) return;
-            List<KeyValuePair<string, object>> keyValuePairs = [];
-            var type = data.GetType();
-            foreach (var prop in type.GetProperties())
-            {
-                keyValuePairs.Add(new(prop.Name, prop.GetValue(data) ?? string.Empty));
-            }
-
-            Console.WriteLine($"{type.Name}, Field Count = {keyValuePairs.Count}");
-            ConsoleTable.From(keyValuePairs).Write(Format.MarkDown);
-        }
-
-        public static async Task<string> GetInputAsync(string msg) => await Task.Run(()=>
-        {
-            Console.Write(msg);
-            return Console.ReadLine() ?? string.Empty;
-        });
-    }
+    // 샘플 클래스 실행
+    await ((SampleBase)Activator.CreateInstance(type)!).ActionImplement();
 }

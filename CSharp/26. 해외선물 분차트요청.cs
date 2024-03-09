@@ -4,40 +4,25 @@ namespace CSharp;
 
 internal class _26 : SampleBase
 {
-    public static async Task Main()
+    public override async Task ActionImplement()
     {
-        // API 생성
-        var api = new EBestOpenApi();
-        // 로그인
-        if (!await api.ConnectAsync(Secret.AppKey, Secret.AppSecretKey))
-        {
-            print($"연결실패: {api.LastErrorMessage}");
-            return;
-        }
-        print($"연결성공, 접속서버: {(api.ServerType == EBestOpenApi.SERVER_TYPE.모의투자 ? "모의투자" : "실투자")}");
+        var shcode = await GetInputAsync("해외선물 종목코드를 입력하세요:");
+        var str_ncnt = await GetInputAsync("N분주기를 입력하세요(1, 3, 5, 10, 15, 30, 45, 60, ...):");
+        int.TryParse(str_ncnt, out int ncnt);
+        var str_readcnt = await GetInputAsync("요청건수를 입력하세요(100, 500, 1000, ...):");
+        int.TryParse(str_readcnt, out int readcnt);
 
-        while (true)
-        {
-            var shcode = await GetInputAsync("해외선물 종목코드를 입력하세요:");
-            var str_ncnt = await GetInputAsync("N분주기를 입력하세요(1, 3, 5, 10, 15, 30, 45, 60, ...):");
-            int.TryParse(str_ncnt, out int ncnt);
-            var str_readcnt = await GetInputAsync("요청건수를 입력하세요(100, 500, 1000, ...):");
-            int.TryParse(str_readcnt, out int readcnt);
-
-            // 해외선물 분 차트 데이터 조회용 함수 호출
-            var (ErrMsg, Datas) = await GetWorldFutureMinuteChartData(api, shcode, ncnt, readcnt
-                , progress_action: (frameCount, receivedCount) =>
-                {
-                    print($"차트조회중... {frameCount}개 프레임, {receivedCount}개 수신완료");
-                });
-            if (ErrMsg.Length > 0)
+        // 해외선물 분 차트 데이터 조회용 함수 호출
+        var (ErrMsg, Datas) = await GetWorldFutureMinuteChartData(api, shcode, ncnt, readcnt
+            , progress_action: (frameCount, receivedCount) =>
             {
-                print($"차트조회 오류: {ErrMsg}");
-            }
-            print(Datas);
-
-            // 무한 반복으로 다른 종목 데이터 불러온다
+                print($"차트조회중... {frameCount}개 프레임, {receivedCount}개 수신완료");
+            });
+        if (ErrMsg.Length > 0)
+        {
+            print($"차트조회 오류: {ErrMsg}");
         }
+        print(Datas);
     }
 
     /// <summary>
