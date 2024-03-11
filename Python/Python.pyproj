@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>83ae92fd-f9e4-418a-8111-6acf8c1a4ad6</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>47. 국선 마틴게일 백테스팅.py</StartupFile>
+    <StartupFile>temp_47. 국선 마틴게일 백테스팅.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -50,7 +50,7 @@
     <Compile Include="46. 국선 이평매매 백테스팅-분봉.py" />
     <Compile Include="45. 국선 이평매매 백테스팅.py" />
     <Compile Include="44. 주식 이평매매 백테스팅.py" />
-    <Compile Include="47. 국선 마틴게일 백테스팅.py" />
+    <Compile Include="temp_47. 국선 마틴게일 백테스팅.py" />
     <Compile Include="common.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
