@@ -35,12 +35,12 @@ async def main():
             },
         }
         response = await api.request('t8419', request, tr_cont = tr_cont, tr_cont_key = tr_cont_key)
-        tr_cont = response.tr_cont;
-        tr_cont_key = response.tr_cont_key;
-        cts_date = response.body['t8419OutBlock']['cts_date'];
         if not response:
            print(f'요청실패: {api.last_message}')
            break
+        tr_cont = response.tr_cont;
+        tr_cont_key = response.tr_cont_key;
+        cts_date = response.body['t8419OutBlock']['cts_date'];
         all_data = response.body['t8419OutBlock1'] + all_data
         await asyncio.sleep(1)
         cont_is_Y =  tr_cont == 'Y'

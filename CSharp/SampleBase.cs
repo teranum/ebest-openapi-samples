@@ -74,5 +74,11 @@ namespace CSharp
             Console.Write(msg);
             return Console.ReadLine() ?? string.Empty;
         });
+
+        public static async Task<ConsoleKey> GetReadKeyAsync(string msg = "") => await Task.Run(() =>
+        {
+            if (msg.Length > 0) Console.Write(msg);
+            return Console.ReadKey().Key;
+        });
     }
 }

@@ -84,12 +84,27 @@ internal class _12 : SampleBase
             return;
         }
 
-        // 10분후 리턴
-        print("10분동안 실시간 조건검색 작동중...");
-        await Task.Delay(600000);
+        print("실시간 작동중... 중지 할려면 아무키를 누르세요");
+        var key = await GetReadKeyAsync();
+
+        // 실시간 조건검색 중지
+        await api.RemoveRealtimeRequest("AFR", tr_data_real.t1860OutBlock.sAlertNum);
+        t1860 tr_data_remove = new()
+        {
+            t1860InBlock = new("U", "D", tr_data_real.t1860OutBlock.sAlertNum, query_index),
+        };
+        await api.GetTRData(tr_data_remove);
+        if (tr_data_remove.t1860OutBlock is null)
+        {
+            // 오류 처리
+            print(tr_data_remove.rsp_cd.Length > 0 ? $"{tr_data_remove.rsp_cd}-{tr_data_remove.rsp_msg}" : api.LastErrorMessage);
+            return;
+        }
+        print(tr_data_remove.t1860OutBlock);
+        api.OnRealtimeEvent -= Api_OnRealtimeEvent;
     }
 
-    private static void Api_OnRealtimeEvent(object? sender, eBEST.OpenApi.Events.EBestOnRealtimeEventArgs e)
+    private void Api_OnRealtimeEvent(object? sender, eBEST.OpenApi.Events.EBestOnRealtimeEventArgs e)
     {
         if (e.TrCode.Equals("AFR")) // API사용자조건검색실시간
         {

@@ -37,14 +37,15 @@ internal class _23 : SampleBase
         // [실시간 시세 요청] BM_ : 업종별투자자별매매현황
         await api.AddRealtimeRequest("BM_", "900");
 
-        // 10분후 실시간 시세 중지
-        print("10분동안 실시간 작동중...");
-        await Task.Delay(600000);
+        print("실시간 작동중... 중지 할려면 아무키를 누르세요");
+        var key = await GetReadKeyAsync();
+
         await api.RemoveRealtimeRequest("BM_", "900");
 
+        api.OnRealtimeEvent -= Api_OnRealtimeEvent;
     }
 
-    private static void Api_OnRealtimeEvent(object? sender, eBEST.OpenApi.Events.EBestOnRealtimeEventArgs e)
+    private void Api_OnRealtimeEvent(object? sender, eBEST.OpenApi.Events.EBestOnRealtimeEventArgs e)
     {
         // OnRealtimeEvent 이벤트
         print($"{e.TrCode}, {e.Key}");

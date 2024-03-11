@@ -69,7 +69,17 @@ async def main():
         print('실시간검색 등록성공, 5분동안 작동...')
         await api.add_realtime('AFR', sAlertNum)
         await asyncio.sleep(5*60) # 5분 동안 유효, 후에 중지
+        # 실시간검색 중지
         await api.remove_realtime('AFR', sAlertNum)
+        request = {
+            't1860InBlock': {
+                'sSysUserFlag': 'U', # 'U' 고정
+                'sFlag': 'D', # 'E:'등록, 'D':중지
+                'sAlertNum': sAlertNum, # Flag 값 'D':중지 일떄만 입력 - 등록 요청 시 수신받은 t1860OutBlock.sAlertNum 값
+                'query_index': query_index,
+            }
+        }
+        response = await api.request('t1860', request)
         await asyncio.sleep(1)
     
     ... # 다른 작업 수행

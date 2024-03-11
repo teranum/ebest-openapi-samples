@@ -78,6 +78,14 @@ async def main():
         
         # 실시간검색 중지
         await api.remove_realtime('AFR', sAlertNum)
+        request = {
+            't1860InBlock': {
+                'sSysUserFlag': 'U', # 'U' 고정
+                'sFlag': 'D', # 'E:'등록, 'D':중지
+                'sAlertNum': sAlertNum, # Flag 값 'D':중지 일떄만 입력 - 등록 요청 시 수신받은 t1860OutBlock.sAlertNum 값
+                'query_index': query_index,
+            }
+        }
         await bot.send_message(telegram_chatid, f'조건검색 실시간 중지 ({cond_list[sel_index]['query_name']})')
         await asyncio.sleep(1)
     

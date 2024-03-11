@@ -15,14 +15,15 @@ internal class _21 : SampleBase
             return;
         }
 
-        // 10분후 리턴
-        print("10분동안 실시간 작동중...");
-        await Task.Delay(600000);
+        print("실시간 작동중... 중지 할려면 아무키를 누르세요");
+        var key = await GetReadKeyAsync();
+
         await api.RemoveRealtimeRequest("S3_", "005930");
 
+        api.OnRealtimeEvent -= Api_OnRealtimeEvent;
     }
 
-    private static void Api_OnRealtimeEvent(object? sender, eBEST.OpenApi.Events.EBestOnRealtimeEventArgs e)
+    private void Api_OnRealtimeEvent(object? sender, eBEST.OpenApi.Events.EBestOnRealtimeEventArgs e)
     {
         // OnRealtimeEvent 이벤트
         print($"{e.TrCode}, {e.Key}");

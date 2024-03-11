@@ -9,13 +9,13 @@ while (true)
 {
     // 샘플 넘버 입력
     ConsoleColor dftForeColor = Console.ForegroundColor;
-    Console.ForegroundColor = ConsoleColor.DarkGreen; 
+    Console.ForegroundColor = ConsoleColor.DarkGreen;
     Console.WriteLine();
     Console.Write("샘플넘버 입력(02~): ");
     var input = Console.ReadLine();
     Console.ForegroundColor = dftForeColor;
 
-    if (string.IsNullOrEmpty(input)) break;
+    if (string.IsNullOrEmpty(input)) continue;
     int.TryParse(input, out var number);
     if (number == 0) continue;
 
