@@ -62,9 +62,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>80</y>
+     <y>110</y>
      <width>610</width>
-     <height>351</height>
+     <height>321</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -107,6 +107,32 @@
    </property>
    <property name="text">
     <string>예수금 (CSPAQ12200)</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_jango_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>80</y>
+     <width>130</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>잔고2 (t0424)</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_che_miche">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>80</y>
+     <width>151</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>체결/미체결 (t0425)</string>
    </property>
   </widget>
  </widget>

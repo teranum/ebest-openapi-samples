@@ -9,7 +9,7 @@ from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsec
 form_class = uic.loadUiType('32. MainWindow.ui')[0]
 
 class MainWindow(QMainWindow, form_class):
-    def __init__(self, loop=None):
+    def __init__(self):
         '''생성자'''
         super().__init__()
         self.setupUi(self)
@@ -20,6 +20,8 @@ class MainWindow(QMainWindow, form_class):
         
         self.btn_jango.clicked.connect(self.func_jango)
         self.btn_miche.clicked.connect(self.func_miche)
+        self.btn_jango_2.clicked.connect(self.func_jango2)
+        self.btn_che_miche.clicked.connect(self.func_che_miche)
         self.btn_yesu.clicked.connect(self.func_yesu)
         
 
@@ -56,6 +58,23 @@ class MainWindow(QMainWindow, form_class):
         self.print(response.body)
         
     @asyncSlot()
+    async def func_jango2(self):
+        '''현물계좌 주식잔고2'''
+        api = self.api
+        request = {
+            "t0424InBlock": {
+                'prcgb': '1', # 단가구분 : 1:평균단가, 2:BEP단가
+                'chegb': '2', # 체결구분 : 0: 결제기준잔고, 2: 체결기준잔고(잔고가 없는 종목은 제외)
+                'dangb': '0', # 단일가구분 : 0:정규장, 1:시간외 단일가
+                'charge': '1', # 제비용포함여부 : 0:미포함, 1:포함
+                'cts_expcode': '', # CTS종목번호 : 연속 조회시에 이전 조회한 OutBlock의 cts_expcode 값으로 설정
+            },
+        }
+        response = await api.request('t0424', request)
+        if not response: return self.print(f'요청실패: {api.last_message}')
+        self.print(response.body)
+        
+    @asyncSlot()
     async def func_miche(self):
         '''현물계좌 주문체결내역 조회(API)'''
         api = self.api
@@ -72,6 +91,23 @@ class MainWindow(QMainWindow, form_class):
             },
         }
         response = await api.request('CSPAQ13700', request)
+        if not response: return self.print(f'요청실패: {api.last_message}')
+        self.print(response.body)
+        
+    @asyncSlot()
+    async def func_che_miche(self):
+        '''현물계좌 주식체결/미체결'''
+        api = self.api
+        request = {
+            't0425InBlock': {
+                'expcode': '', # 종목번호
+                'chegb': '0', # 체결구분 : 0:전체, 1:체결, 2:미체결
+                'medosu': '0', # 매도수구분 : 0:전체, 1:매도, 2:매수
+                'sortgb': '1', # 정렬기준 : 1:주문번호 역순, 2:주문번호 순
+                'cts_ordno': '', # 연속조회키 : 연속조회시 사용
+            },
+        }
+        response = await api.request('t0425', request)
         if not response: return self.print(f'요청실패: {api.last_message}')
         self.print(response.body)
         
@@ -95,7 +131,7 @@ def main():
     loop = QEventLoop(app)
     asyncio.set_event_loop(loop)
 
-    window = MainWindow(loop)
+    window = MainWindow()
     window.show()
     
     with loop:
