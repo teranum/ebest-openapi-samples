@@ -86,6 +86,7 @@ async def main():
                 'query_index': query_index,
             }
         }
+        response = await api.request('t1860', request)
         await bot.send_message(telegram_chatid, f'조건검색 실시간 중지 ({cond_list[sel_index]['query_name']})')
         await asyncio.sleep(1)
     
