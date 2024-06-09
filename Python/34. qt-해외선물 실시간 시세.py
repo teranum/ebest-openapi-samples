@@ -6,7 +6,7 @@ from qasync import QEventLoop, asyncSlot
 import ebest
 from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsecretkey 변수를 정의하고 사용하세요
 
-form_class = uic.loadUiType('37. MainWindow.ui')[0]
+form_class = uic.loadUiType('34. MainWindow.ui')[0]
 
 class MainWindow(QMainWindow, form_class):
     def __init__(self):

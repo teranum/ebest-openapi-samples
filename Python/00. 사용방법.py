@@ -1,9 +1,20 @@
 ﻿'''
+가능한 파이썬 64비트 최신버전 사용 권장 (3.11 이상)
+
 패키지 설치
-pip install asyncio
 pip install ebest
 
-(일부 샘플은 prettytable, padas, ta, matplotlib 패키지 필요)
+(
+일부 샘플은 prettytable, padas, ta, matplotlib 패키지 필요
+pip install pandas
+pip install prettytable
+pip install ta
+pip install matplotlib
+
+QT샘플은 PyQt6, qasync 필요
+pip install PyQt6
+pip install qasync
+)
 
 ebest 모듈사용
 프로퍼티:

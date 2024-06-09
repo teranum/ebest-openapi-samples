@@ -4,8 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>83ae92fd-f9e4-418a-8111-6acf8c1a4ad6</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>
-    </StartupFile>
+    <StartupFile>01. 로그인.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -30,8 +29,9 @@
     <Compile Include="15. 국내선물 잔고-미체결-주문.py" />
     <Compile Include="14. 주식 잔고-미체결-주문.py" />
     <Compile Include="04. 주식현재가.py" />
-    <Compile Include="36. qt-국내선물 실시간 시세.py" />
-    <Compile Include="37. qt-해외선물 실시간 시세.py" />
+    <Compile Include="33. qt-국내선물 실시간 시세.py" />
+    <Compile Include="34. qt-해외선물 실시간 시세.py" />
+    <Compile Include="app_keys.py" />
     <Compile Include="temp_48. 국채 스프레드 백테스팅.py" />
     <Compile Include="26. 해외선물 분차트요청.py" />
     <Compile Include="25. 해외선물 종목정보.py" />
