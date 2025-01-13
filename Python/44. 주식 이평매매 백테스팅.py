@@ -21,15 +21,13 @@ import pandas as pd
     - 5일선과 20일선 모두 60일선 아래로 떨어질 때 전량청산
 '''
 
-async def main():
-    api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
-    
+async def sample(api):
     while True:
-        shcode = input(f'종목코드 6자리를 입력하세요(ex 005930):')
+        shcode = await ainput(f'종목코드 6자리를 입력하세요(ex 005930):')
+        if len(shcode) == 0: break
         if len(shcode) != 6: continue # 종목코드 6자리 체크
         count = 0
-        count_str = input(f'조회할 데이터 건수를 입력하세요(ex 1500):')
+        count_str = await ainput(f'조회할 데이터 건수를 입력하세요(ex 1500):')
         if len(count_str) != 0 and not count_str.isdigit(): continue
         if len(count_str) != 0: count = int(count_str)
         if count == 0: count = 1500 # 기본값
@@ -134,10 +132,6 @@ async def main():
         print_table(result_df)
         print(f'진입횟수: {진입횟수}회, 최종수익율: {round(최종수익율, 2)}%, 연평균수익율: {round(연평균수익율, 2)}%')
         print('')
-        pass
-   
-    await api.close()
-
 
 async def GetStockChartData(api, code, count, gubun='2'):
     '''
@@ -194,7 +188,15 @@ async def GetStockChartData(api, code, count, gubun='2'):
     return pd.DataFrame([list((x['date'], x['open'], x['high'], x['low'], x['close'], x['jdiff_vol'])) for x in all_data]
                         , columns = ['time', 'open', 'high', 'low', 'close', 'volume'])
 
-asyncio.run(main())
+async def main():
+    api=ebest.OpenApi()
+    if not await api.login(appkey, appsecretkey):
+        return print(f'연결실패: {api.last_message}')
+    await sample(api)
+    await api.close()
+
+if __name__ == '__main__':
+    asyncio.run(main())
 
 # Output:
 '''

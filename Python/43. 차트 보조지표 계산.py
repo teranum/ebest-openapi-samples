@@ -10,10 +10,7 @@ import ta
 pandas와 ta 패키지를 이용한 보조지표 계산
 '''
 
-async def main():
-    api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
-    
+async def sample(api):
     # 삼성전자 일봉 데이터 500개 조회
     request = {
         't8410InBlock': {
@@ -54,10 +51,16 @@ async def main():
     
     # 출력
     print_table(out_df)
-    
+
+async def main():
+    api=ebest.OpenApi()
+    if not await api.login(appkey, appsecretkey):
+        return print(f'연결실패: {api.last_message}')
+    await sample(api)
     await api.close()
 
-asyncio.run(main())
+if __name__ == '__main__':
+    asyncio.run(main())
 
 # Output:
 '''

@@ -8,11 +8,7 @@ from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsec
 2. 주문요청 : (매수, 매도, 정정, 취소), (시장가, 지정가)
 '''
 
-async def main():
-    api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
-    print('연결성공, 접속서버: ' + ('모의투자' if api.is_simulation else '실투자'))
-    
+async def sample(api):
     while True:
         # 잔고 표시
         print('잔고조회중...')
@@ -24,7 +20,7 @@ async def main():
         }
         response = await api.request('t0441', request)
         if not response: return print(f'잔고 요청실패: {api.last_message}')
-        if not response.body.__contains__('t0441OutBlock1'):
+        if not response.body.get('t0441OutBlock1'):
             print('보유잔고가 없습니다.')
         else:
             balances = [dict({
@@ -50,7 +46,7 @@ async def main():
         }
         response = await api.request('t0434', request)
         if not response: return print(f'미체결 요청실패: {api.last_message}')
-        if not response.body.__contains__('t0434OutBlock1'):
+        if not response.body.get('t0434OutBlock1'):
             print('미체결내역이 없습니다.')
         else:
             unfills = [dict({
@@ -66,14 +62,14 @@ async def main():
             print_table(unfills)
 
         # 주문요청 입력
-        주문요청 = input(f'주문을 입력하세요 (1:매수, 2:매도, 3:정정, 4:취소):')
+        주문요청 = await ainput(f'주문을 입력하세요 (1:매수, 2:매도, 3:정정, 4:취소):')
         if 주문요청 == '1' or 주문요청 == '2':
             # 주문 정보 입력
-            종목코드 = input(f'선물옵션 종목코드를 입력하세요 (ex 국선 24년 6월물 경우 101V6000):')
+            종목코드 = await ainput(f'선물옵션 종목코드를 입력하세요 (ex 국선 24년 6월물 경우 101V6000):')
             매매구분 = '2' if 주문요청 == '1' else '1'
-            주문구분 = input(f'주문구분을 입력하세요 (00:지정가, 03:시장가):')
-            주문가격 = float(0 if 주문구분 == '03' else input(f'주문가격을 입력하세요:'))
-            주문수량 = int(input(f'주문수량을 입력하세요:'))
+            주문구분 = await ainput(f'주문구분을 입력하세요 (00:지정가, 03:시장가):')
+            주문가격 = float(0 if 주문구분 == '03' else await ainput(f'주문가격을 입력하세요:'))
+            주문수량 = int(await ainput(f'주문수량을 입력하세요:'))
         
             # 신규주문 요청
             request = {
@@ -88,13 +84,12 @@ async def main():
     
             response = await api.request('CFOAT00100', request)
             if not response: print(f'주문 요청실패: {api.last_message}')
-            elif response.body.__contains__('rsp_msg'):
+            elif response.body.get('rsp_msg'):
                 print(f'주문 요청 결과: {response.body['rsp_msg']}')
-    
         elif 주문요청 == '3' or 주문요청 == '4':
             # 정정/취소 정보 입력
-            주문번호 = int(input(f'주문번호를 입력하세요:'))
-            정정가격 = float(input(f'정정가격을 입력하세요:') if 주문요청 == '3' else 0)
+            주문번호 = int(await ainput(f'주문번호를 입력하세요:'))
+            정정가격 = float(await ainput(f'정정가격을 입력하세요:') if 주문요청 == '3' else 0)
         
             # 주문번호 일치하는 미체결내역 조회
             matched_unfill = next((x for x in unfills if x['주문번호'] == 주문번호), None)
@@ -114,7 +109,7 @@ async def main():
                     }
                     response = await api.request('CFOAT00200', request)
                     if not response: print(f'정정 요청실패: {api.last_message}')
-                    elif response.body.__contains__('rsp_msg'):
+                    elif response.body.get('rsp_msg'):
                         print(f'정정 요청 결과: {response.body['rsp_msg']}')
                 else:
                     # 취소요청
@@ -127,16 +122,23 @@ async def main():
                     }
                     response = await api.request('CFOAT00300', request)
                     if not response: return print(f'취소 요청실패: {api.last_message}')
-                    if response.body.__contains__('rsp_msg'):
+                    if response.body.get('rsp_msg'):
                         print(f'취소 요청 결과: {response.body['rsp_msg']}')
+        else:
+            return print('잘못된 입력입니다.')
         
         await asyncio.sleep(1) # 1초 대기 후 반복
-        pass
-    
-    ... # 다른 작업 수행
+
+
+async def main():
+    api=ebest.OpenApi()
+    if not await api.login(appkey, appsecretkey):
+        return print(f'연결실패: {api.last_message}')
+    await sample(api)
     await api.close()
 
-asyncio.run(main())
+if __name__ == '__main__':
+    asyncio.run(main())
 
 # Output:
 '''

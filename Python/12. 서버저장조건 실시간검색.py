@@ -1,13 +1,9 @@
-﻿import asyncio
+import asyncio
 import ebest
 from common import *
 from app_keys import *
 
-async def main():
-    api=ebest.OpenApi()
-    api.on_message = on_message
-    api.on_realtime = on_realtime
-    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
+async def sample(api):
     if api.is_simulation: return print('실시간검색은 실서버에서만 가능합니다')
      
     # 조건검색식 리스트 조회
@@ -28,7 +24,7 @@ async def main():
     
     # 요청할 조건검색식 선택
     cond_len = len(cond_list)
-    sel_index = int(input(f'조건검색식index (0~{cond_len-1})를 입력하세요:'))
+    sel_index = int(await ainput(f'조건검색식index (0~{cond_len-1})를 입력하세요:'))
     if sel_index >= cond_len: return print('잘못된 index')
     
     # 조건검색식 조회
@@ -66,9 +62,9 @@ async def main():
     if sAlertNum == '':
         print('실시간검색 등록실패')
     else:
-        print('실시간검색 등록성공, 5분동안 작동...')
+        print('실시간검색 등록성공, 1분동안 작동...')
         await api.add_realtime('AFR', sAlertNum)
-        await asyncio.sleep(5*60) # 5분 동안 유효, 후에 중지
+        await asyncio.sleep(1*60) # 1분 동안 유효, 후에 중지
         # 실시간검색 중지
         await api.remove_realtime('AFR', sAlertNum)
         request = {
@@ -81,14 +77,22 @@ async def main():
         }
         response = await api.request('t1860', request)
         await asyncio.sleep(1)
-    
-    ... # 다른 작업 수행
-    await api.close()
 
 def on_message(api:ebest.OpenApi, msg:str): print(f'on_message: {msg}')
 
 def on_realtime(api:ebest.OpenApi, trcode, key, realtimedata):
     if trcode == 'AFR':
         print(f'실시간조건검색: {trcode}, {key}, {realtimedata}')
+    
 
-asyncio.run(main())
+async def main():
+    api=ebest.OpenApi()
+    api.on_message.connect(on_message)
+    api.on_realtime.connect(on_realtime)
+    if not await api.login(appkey, appsecretkey):
+        return print(f'연결실패: {api.last_message}')
+    await sample(api)
+    await api.close()
+
+if __name__ == '__main__':
+    asyncio.run(main())

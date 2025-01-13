@@ -1,12 +1,9 @@
-﻿import asyncio
+import asyncio
 import ebest
 from common import *
 from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsecretkey 변수를 정의하고 사용하세요
 
-async def main():
-    api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
-    
+async def sample(api):
     request = {
         't8432InBlock': {
             'gubun': '0',
@@ -17,11 +14,16 @@ async def main():
     
     print_table(response.body['t8432OutBlock'])
     
-    ... # 다른 작업 수행
+
+async def main():
+    api=ebest.OpenApi()
+    if not await api.login(appkey, appsecretkey):
+        return print(f'연결실패: {api.last_message}')
+    await sample(api)
     await api.close()
 
-asyncio.run(main())
-
+if __name__ == '__main__':
+    asyncio.run(main())
 
 # Output:
 '''

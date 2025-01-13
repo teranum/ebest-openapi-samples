@@ -1,12 +1,9 @@
-﻿import asyncio
+import asyncio
 import ebest
 from common import *
 from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsecretkey 변수를 정의하고 사용하세요
 
-async def main():
-    api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
-    
+async def sample(api):
     request = {
         't8410InBlock': {
             'shcode': '005930', # 삼성전자
@@ -40,11 +37,17 @@ async def main():
                 print('연속 데이터 없음')
     
     print_table(all_data)
-    
-    ... # 다른 작업 수행
+
+
+async def main():
+    api=ebest.OpenApi()
+    if not await api.login(appkey, appsecretkey):
+        return print(f'연결실패: {api.last_message}')
+    await sample(api)
     await api.close()
 
-asyncio.run(main())
+if __name__ == '__main__':
+    asyncio.run(main())
 
 # Output:
 '''
@@ -59,9 +62,7 @@ Row Count = 200
 | 20230515 | 64100 | 64600 | 63900 | 64500 |  8157143  |  524320 |    0    | 0.00 |    0     |     0     |  2   |
 | 20230516 | 65800 | 65900 | 65300 | 65400 |  12200178 |  799675 |    0    | 0.00 |    0     |     0     |  2   |
 | 20230517 | 65900 | 65900 | 64800 | 65000 |  10217085 |  666669 |    0    | 0.00 |    0     |     0     |  5   |
-
 ...
-
 | 20240223 | 73600 | 74200 | 72900 | 72900 |  16060746 | 1177781 |    0    | 0.00 |    0     |     0     |  5   |
 | 20240226 | 72300 | 73200 | 72200 | 72800 |  14549894 | 1059031 |    0    | 0.00 |    0     |     0     |  5   |
 | 20240227 | 73100 | 73400 | 72700 | 72900 |  13050455 |  952221 |    0    | 0.00 |    0     |     0     |  2   |

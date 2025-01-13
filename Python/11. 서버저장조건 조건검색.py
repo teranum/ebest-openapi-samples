@@ -3,10 +3,7 @@ import ebest
 from common import *
 from app_keys import *
 
-async def main():
-    api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
-    
+async def sample(api):
     # 조건검색식 리스트 조회
     request = {
         't1866InBlock': {
@@ -25,7 +22,7 @@ async def main():
     
     # 요청할 조건검색식 선택
     cond_len = len(cond_list)
-    sel_index = int(input(f'조건검색식index (0~{cond_len-1})를 입력하세요:'))
+    sel_index = int(await ainput(f'조건검색식index (0~{cond_len-1})를 입력하세요:'))
     if sel_index >= cond_len: return print('잘못된 index')
     
     # 조건검색식 조회
@@ -44,11 +41,16 @@ async def main():
     else:
         print(f'조건검색식[{query_index}] 결과 없음')
     
-    ... # 다른 작업 수행
+
+async def main():
+    api=ebest.OpenApi()
+    if not await api.login(appkey, appsecretkey):
+        return print(f'연결실패: {api.last_message}')
+    await sample(api)
     await api.close()
 
-
-asyncio.run(main())
+if __name__ == '__main__':
+    asyncio.run(main())
 
 # Output:
 '''

@@ -1,4 +1,4 @@
-﻿import asyncio
+import asyncio
 import ebest
 from common import *
 from app_keys import appkey, appsecretkey, user_id, telegram_token, telegram_chatid
@@ -7,13 +7,7 @@ from app_keys import appkey, appsecretkey, user_id, telegram_token, telegram_cha
 from telegram import Bot # pip install python-telegram-bot
 bot = Bot(telegram_token)
 
-async def main():
-    api=ebest.OpenApi()
-    api.on_message = on_message
-    api.on_realtime = on_realtime
-    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
-    if api.is_simulation: return print('실시간검색은 실서버에서만 가능합니다')
-     
+async def sample(api):
     # 조건검색식 리스트 조회
     request = {
         't1866InBlock': {
@@ -32,7 +26,7 @@ async def main():
     
     # 요청할 조건검색식 선택
     cond_len = len(cond_list)
-    sel_index = int(input(f'조건검색식index (0~{cond_len-1})를 입력하세요:'))
+    sel_index = int(await ainput(f'조건검색식index (0~{cond_len-1})를 입력하세요:'))
     if sel_index >= cond_len: return print('잘못된 index')
     
     # 조건검색식 조회
@@ -88,10 +82,6 @@ async def main():
         }
         response = await api.request('t1860', request)
         await bot.send_message(telegram_chatid, f'조건검색 실시간 중지 ({cond_list[sel_index]['query_name']})')
-        await asyncio.sleep(1)
-    
-    ... # 다른 작업 수행
-    await api.close()
 
 def on_message(api:ebest.OpenApi, msg:str): print(f'on_message: {msg}')
 
@@ -109,4 +99,20 @@ async def on_realtime(api:ebest.OpenApi, trcode, key, realtimedata):
             gg = await bot.send_message(telegram_chatid, msg)
             print(gg.text)
 
-asyncio.run(main())
+
+async def main():
+    api=ebest.OpenApi()
+    api.on_message = on_message
+    api.on_realtime = on_realtime
+    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
+    if api.is_simulation:
+        print('실시간검색은 실서버에서만 가능합니다')
+        api.close()
+        return
+    await sample(api)
+    await asyncio.sleep(1)
+    await api.close()
+
+     
+if __name__ == '__main__':
+    asyncio.run(main())

@@ -3,12 +3,10 @@ import ebest
 from common import *
 from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsecretkey 변수를 정의하고 사용하세요
 
-async def main():
-    api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
-    
+async def sample(api):
     while True:
-        symbol = input(f'해외선물 종목코드를 입력하세요:')
+        symbol = await ainput(f'해외선물 종목코드를 입력하세요:')
+        if len(symbol) == 0: break
 
         # [요청] o3105 : 해외선물현재가(종목정보)조회-API용
         request = {
@@ -22,12 +20,16 @@ async def main():
         else:
             print(f"요청실패: {api.last_message}")
     
-        pass # 무한 반복으로 다른 종목정보 불러온다
-    
+
+async def main():
+    api=ebest.OpenApi()
+    if not await api.login(appkey, appsecretkey):
+        return print(f'연결실패: {api.last_message}')
+    await sample(api)
     await api.close()
 
-asyncio.run(main())
-
+if __name__ == '__main__':
+    asyncio.run(main())
 
 # Output:
 '''

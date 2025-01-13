@@ -124,7 +124,6 @@ class MainWindow(QMainWindow, form_class):
         if not response: return self.print(f'요청실패: {api.last_message}')
         self.print(response.body)
 
-
 def main():
     '''메인함수'''
     app = QApplication(sys.argv)
@@ -136,8 +135,6 @@ def main():
     
     with loop:
         loop.run_forever()
-
-
 
 if __name__ == '__main__':
     main()

@@ -89,7 +89,6 @@ class MainWindow(QMainWindow, form_class):
         await self.api.remove_realtime('FC0', symbol)
         self.print(f'{symbol} 실시간시세 요청 중지')
 
-
 def main():
     '''메인함수'''
     loop = QEventLoop(QApplication(sys.argv))
@@ -100,8 +99,6 @@ def main():
     
     with loop:
         loop.run_forever()
-
-
 
 if __name__ == '__main__':
     main()

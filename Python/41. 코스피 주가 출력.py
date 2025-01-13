@@ -7,10 +7,7 @@ from app_keys import appkey, appsecretkey
 '''
 코스피 종합지수 일봉 데이터를 불러올수 있을 때까지 불러온 후 차트(종가라인)로 출력
 '''
-async def main():
-    api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
-    
+async def sample(api):
     print('전체 코스피 일봉데이터를 불러온 후 차트(종가라인)로 출력합니다.')
 
     cts_date = ''
@@ -50,13 +47,16 @@ async def main():
     close = [float(x['close']) for x in all_data]
     plot.plot(close)
     plot.show()
-    
+
+async def main():
+    api=ebest.OpenApi()
+    if not await api.login(appkey, appsecretkey):
+        return print(f'연결실패: {api.last_message}')
+    await sample(api)
     await api.close()
 
-
-
-asyncio.run(main())
-
+if __name__ == '__main__':
+    asyncio.run(main())
 
 # Output:
 '''

@@ -3,24 +3,16 @@ import ebest
 from common import *
 from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsecretkey 변수를 정의하고 사용하세요
 
-import pandas as pd
-
-async def main():
-    api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
-    
+async def sample(api):
     while True:
-        shcode = input(f'해외선물 종목코드를 입력하세요:')
-        ncnt = int(input(f'N분주기를 입력하세요(1, 3, 5, 10, 15, 30, 45, 60, ...):'))
-        readcnt = int(input(f'요청건수를 입력하세요(100, 500, 1000, ...):'))
+        shcode = await ainput(f'해외선물 종목코드를 입력하세요:')
+        if len(shcode) == 0: break
+        ncnt = int(await ainput(f'N분주기를 입력하세요(1, 3, 5, 10, 15, 30, 45, 60, ...):'))
+        readcnt = int(await ainput(f'요청건수를 입력하세요(100, 500, 1000, ...):'))
 
         # 해외선물 분 차트 데이터 조회용 함수 호출
         df = await GetWorldFutureMinuteChartData(api, shcode, ncnt, readcnt)
         print_table(df)
-        pass # 무한 반복으로 다른 종목 데이터 불러온다
-    
-    await api.close()
-
 
 
 async def GetWorldFutureMinuteChartData(api, shcode, ncnt, readcnt):
@@ -40,7 +32,7 @@ async def GetWorldFutureMinuteChartData(api, shcode, ncnt, readcnt):
     all_data = []
     req_fram_count = 0
     while received_count < readcnt:
-        # 일봉 데이터 조회
+        # 분봉 데이터 조회
         req_fram_count += 1
         print (f'[{shcode}] 차트요청중...{req_fram_count}')
         req_count = min(500, readcnt - received_count)
@@ -59,7 +51,6 @@ async def GetWorldFutureMinuteChartData(api, shcode, ncnt, readcnt):
             print(f'요청실패: {api.last_message}')
             break
         
-        # 날짜, 시간, 시가, 고가, 저가, 종가, 거래량 데이터로 변환
         data = response.body.get('o3123OutBlock1', None)
         if data is None: break
         
@@ -75,10 +66,19 @@ async def GetWorldFutureMinuteChartData(api, shcode, ncnt, readcnt):
         await asyncio.sleep(1)
         pass
     
-    return pd.DataFrame([list((x['date'], x['time'], float(x['open']), float(x['high']), float(x['low']), float(x['close']), float(x['volume']))) for x in all_data]
-                        , columns = ['date', 'time', 'open', 'high', 'low', 'close', 'volume'])
+    # 날짜, 시간, 시가, 고가, 저가, 종가, 거래량 데이터로 변환
+    # to ['date', 'time', 'open', 'high', 'low', 'close', 'volume']
+    return [{'date': x['date'], 'time': x['time'], 'open': float(x['open']), 'high': float(x['high']), 'low': float(x['low']), 'close': float(x['close']), 'volume': float(x['volume'])} for x in all_data]
 
-asyncio.run(main())
+async def main():
+    api=ebest.OpenApi()
+    if not await api.login(appkey, appsecretkey):
+        return print(f'연결실패: {api.last_message}')
+    await sample(api)
+    await api.close()
+
+if __name__ == '__main__':
+    asyncio.run(main())
 
 # Output:
 '''

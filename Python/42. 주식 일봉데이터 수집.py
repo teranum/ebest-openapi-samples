@@ -8,10 +8,7 @@ from app_keys import appkey, appsecretkey, stock_dir
 '''
 주식시장 전체종목(또는 필요한 종목) 일봉데이터 수집
 '''
-async def main():
-    api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
-    
+async def sample(api):
     # [요청] t8436 : 주식종목조회 API용
     request = {
         't8436InBlock': {
@@ -62,11 +59,15 @@ async def main():
             await asyncio.sleep(3.5) # 3.5초간 대기 (조회제한 10분단 200건, 최대 3초당 1건 요청 가능)
         pass
 
-    
+async def main():
+    api=ebest.OpenApi()
+    if not await api.login(appkey, appsecretkey):
+        return print(f'연결실패: {api.last_message}')
+    await sample(api)
     await api.close()
 
-asyncio.run(main())
-
+if __name__ == '__main__':
+    asyncio.run(main())
 
 # Output:
 '''

@@ -23,10 +23,7 @@ import pandas as pd
     - 5 이평과 20 이평 모두 60 이평 아래로 떨어질 때 청산
 '''
 
-async def main():
-    api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
-    
+async def sample(api):
     shcode = '90199999' # 기본값, 연결선물지수
 
     # 30분봉 데이터를 불러올 수 있을때 까지 불러온다
@@ -138,9 +135,6 @@ async def main():
     print(f'최종평가손익(pt): {round(최종평가포인트, 2)}')
     print(f'최종평가손익(원): {int(최종평가포인트 * 250000):,}')
     print('')
-   
-    await api.close()
-
 
 async def GetFutureMinuteChartData(api, code, ncnt, count):
     '''
@@ -204,7 +198,15 @@ async def GetFutureMinuteChartData(api, code, ncnt, count):
     return pd.DataFrame([list((x['date'], x['time'], float(x['open']), float(x['high']), float(x['low']), float(x['close']), float(x['jdiff_vol']))) for x in all_data]
                         , columns = ['date', 'time', 'open', 'high', 'low', 'close', 'volume'])
 
-asyncio.run(main())
+async def main():
+    api=ebest.OpenApi()
+    if not await api.login(appkey, appsecretkey):
+        return print(f'연결실패: {api.last_message}')
+    await sample(api)
+    await api.close()
+
+if __name__ == '__main__':
+    asyncio.run(main())
 
 # Output:
 '''

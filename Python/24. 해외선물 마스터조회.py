@@ -3,10 +3,7 @@ import ebest
 from common import *
 from app_keys import appkey, appsecretkey # app_keys.py 파일에 appkey, appsecretkey 변수를 정의하고 사용하세요
 
-async def main():
-    api=ebest.OpenApi()
-    if not await api.login(appkey, appsecretkey): return print(f'연결실패: {api.last_message}')
-    
+async def sample(api):
     # [요청] o3101 : 해외선물마스터조회-API용
     request = {
         "o3101InBlock": {
@@ -18,11 +15,16 @@ async def main():
     
     print_table(response.body['o3101OutBlock'])
     
-    ... # 다른 작업 수행
+
+async def main():
+    api=ebest.OpenApi()
+    if not await api.login(appkey, appsecretkey):
+        return print(f'연결실패: {api.last_message}')
+    await sample(api)
     await api.close()
 
-asyncio.run(main())
-
+if __name__ == '__main__':
+    asyncio.run(main())
 
 # Output:
 '''
