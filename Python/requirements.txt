@@ -1,0 +1,9 @@
+ebest
+PrettyTable
+cryptography
+PySide6
+PyQt6
+qasync
+pandas
+ta
+matplotlib
