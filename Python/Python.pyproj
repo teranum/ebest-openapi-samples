@@ -4,13 +4,13 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>83ae92fd-f9e4-418a-8111-6acf8c1a4ad6</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>01. 로그인.py</StartupFile>
-    <SearchPath>
-    </SearchPath>
+    <StartupFile>Devcenter.py</StartupFile>
+    <SearchPath>..\..\python-packages\ebest\src</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>Python</Name>
     <RootNamespace>Python</RootNamespace>
+    <InterpreterId>MSBuild|env64|$(MSBuildProjectFullPath)</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,7 +32,6 @@
     <Compile Include="33. qt-국내선물 실시간 시세.py" />
     <Compile Include="34. qt-해외선물 실시간 시세.py" />
     <Compile Include="app_keys.py" />
-    <Compile Include="temp_48. 국채 스프레드 백테스팅.py" />
     <Compile Include="26. 해외선물 분차트요청.py" />
     <Compile Include="25. 해외선물 종목정보.py" />
     <Compile Include="24. 해외선물 마스터조회.py" />
@@ -57,8 +56,22 @@
     <Compile Include="46. 국선 이평매매 백테스팅-분봉.py" />
     <Compile Include="45. 국선 이평매매 백테스팅.py" />
     <Compile Include="44. 주식 이평매매 백테스팅.py" />
-    <Compile Include="temp_47. 국선 그물매매 백테스팅.py" />
     <Compile Include="common.py" />
+    <Compile Include="Devcenter.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="env64\">
+      <Id>env64</Id>
+      <Version>3.12</Version>
+      <Description>env64 (Python 3.12 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="requirements.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
