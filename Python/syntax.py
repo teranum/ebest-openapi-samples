@@ -1,4 +1,13 @@
-﻿from PyQt6 import QtCore, QtGui
+﻿import importlib
+import sys
+for QtModuleName in ("PyQt5", "PyQt6", "PySide2", "PySide6"):
+    if QtModuleName in sys.modules:
+        QtModule = sys.modules[QtModuleName]
+        break
+if QtModule is None:
+    raise ImportError("No Qt bindings found")
+QtCore = importlib.import_module(QtModuleName + ".QtCore", package=QtModuleName)
+QtGui = importlib.import_module(QtModuleName + ".QtGui", package=QtModuleName)
 
 def format(color, style=''):
     """Return a QTextCharFormat with the given attributes.
@@ -17,7 +26,6 @@ def format(color, style=''):
         _format.setFontItalic(True)
 
     return _format
-
 
 # Syntax styles that can be shared by all languages
 DARK_STYLES = {

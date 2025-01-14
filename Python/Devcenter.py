@@ -1,9 +1,9 @@
-﻿import aiohttp, asyncio, base64, json, os, syntax, sys, types, uuid, webbrowser
+﻿import aiohttp, asyncio, base64, json, os, sys, types, uuid, webbrowser
 from datetime import datetime
 from glob import glob
 from cryptography.fernet import Fernet
 
-# PySide6로 변경시 PyQt6를 PySide6로 변경, syntax.py 파일도 같이 변경
+# PySide6로 변경시 PyQt6를 PySide6로 변경
 from PyQt6 import QtGui
 from PyQt6.QtCore import QPoint, Qt
 from PyQt6.QtWidgets import(
@@ -12,6 +12,7 @@ from PyQt6.QtWidgets import(
     QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget, QListWidgetItem
     )
 
+import syntax
 from qasync import QEventLoop, asyncSlot
 from ebest import OpenApi
 from common import set_ext_func, print as custom_print
@@ -38,7 +39,7 @@ class MainWindow(QMainWindow):
         if not os.path.exists(self.backup_folder):
             os.makedirs(self.backup_folder)
 
-        # loading initial data
+        # loading initial setting data
         settiong_file_path = self.backup_folder + "\\setting.json"
         self.settings = dict()
         if os.path.exists(settiong_file_path):
@@ -115,7 +116,7 @@ class MainWindow(QMainWindow):
         quit_act.triggered.connect(self.close)
 
         menu_tool = self.menuBar().addMenu(self.tr("&Tool"))
-        tool_action_names = ["전체 URL", "TR필드", "TEST"]
+        tool_action_names = ["전체 URL", "TR필드"]
         tool_action_count = len(tool_action_names)
         for i in range(tool_action_count):
             action = menu_tool.addAction(tool_action_names[i])
@@ -767,9 +768,11 @@ class MainWindow(QMainWindow):
 
     @asyncSlot()
     async def tool_action(self, action_name:str):
-        self.output_log(LOG_TYPE.LOG, f"ToolAction: {action_name}")
+        self.output_log(LOG_TYPE.LOG, f"Tool: {action_name}")
         if action_name == "전체 URL":
             lines = list[str]()
+            lines.append("tr_code_to_path:dict = {")
+            lines.append("")
             for root_group in self.root_groups:
                 for subgroup in root_group.sub_groupList:
                     subgroup_name = subgroup['name']
@@ -783,6 +786,8 @@ class MainWindow(QMainWindow):
                         else:
                             lines.append(f'    "{tr_prop['trCode']}" : "{subgroup_url}",')
                     lines.append("")
+            lines.append("}")
+            lines.append("")
             self.text_result.setPlainText("\n".join(lines))
         elif action_name == "TR필드":
             if self.cur_tr_prop is not None:
@@ -942,7 +947,6 @@ class MainWindow(QMainWindow):
                 self.text_test_out_tr_cont_yn.setText(last_response.tr_cont)
                 self.text_test_out_tr_cont_key.setText(last_response.tr_cont_key)
                 self.text_test_response.setPlainText(last_response.response_text)
-                # tm to string
                 self.text_test_request_time.setText(f"요청시간: {datetime.fromtimestamp(last_response.request_time).strftime("%H:%M:%S.%f")[:-3]}")
                 self.text_test_response_time.setText(f"응답시간(ms): {last_response.elapsed_ms}")
         self.btn_run.setEnabled(True)
@@ -1135,7 +1139,3 @@ if __name__ == '__main__':
     with loop:
         loop.run_until_complete(window.initalize_async())
         loop.run_forever()
-    # loop = QtAsyncio.QAsyncioEventLoop(app)
-    # QtAsyncio.run_until_complete(window.initalize_async())
-    # QtAsyncio.run(window.initalize_async())
-    # QtAsyncio.run(app.exec())
