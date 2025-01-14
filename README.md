@@ -1,8 +1,5 @@
 ﻿# LS증권 OpenApi샘플 (C#, Python)
 
-## C# 샘플 이용시 권장
-- Visual Studio 2022 이상, NET8.0 이상 사용
-
 ## Python 샘플 이용시 권장
 - 가능한 64비트 Python 최신 버전을 사용
 - Devcenter.py 파일에서 OpenApi 모든 기능과 샘플 테스트 가능
