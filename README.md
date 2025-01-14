@@ -1,4 +1,4 @@
-﻿# LS증권 OpenApi샘플 (C#, Python)
+﻿# LS증권 OpenApi샘플
 
 ## Python 샘플 이용시 권장
 - 가능한 64비트 Python 최신 버전을 사용
