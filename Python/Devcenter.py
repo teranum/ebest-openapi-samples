@@ -371,7 +371,7 @@ class MainWindow(QMainWindow):
             for root_group in root_groups:
                 subgroups = await LSSiteHelper.GetSubGroups(root_group.id)
                 count += 1
-                not_opened_groups = [x for x in subgroups if x['open'] == 0]
+                not_opened_groups = [x for x in subgroups if x['open'] != True]
                 for not_opened_group in not_opened_groups:
                     subgroups.remove(not_opened_group)
                 for subgroup in subgroups:
@@ -1045,9 +1045,8 @@ class RootGroup:
 class LSSiteHelper:
     URL_BASE = "https://openapi.ls-sec.co.kr"
     httpclient:aiohttp.ClientSession = None
-    def __init__(self):
-        pass
 
+    @staticmethod
     def initialize():
         LSSiteHelper.httpclient = aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10))
 
@@ -1091,25 +1090,23 @@ class LSSiteHelper:
         return root_groupList
 
     @staticmethod
-    async def GetSubGroups(group_id: str) ->  list:
-        response = await LSSiteHelper.httpclient.get(LSSiteHelper.URL_BASE + "/api/apis/public/api-list" + f"/{group_id}")
+    async def GetApiInfo(url) -> list | dict:
+        response = await LSSiteHelper.httpclient.get(LSSiteHelper.URL_BASE + url)
         if response.status != 200:
             return None
         return await response.json()
 
     @staticmethod
-    async def GetTrProps(group_id: str) ->  list:
-        response = await LSSiteHelper.httpclient.get(LSSiteHelper.URL_BASE + "/api/apis/guide/tr" + f"/{group_id}")
-        if response.status != 200:
-            return None
-        return await response.json()
+    def GetSubGroups(group_id: str):
+        return LSSiteHelper.GetApiInfo(f"/api/apis/public/api-list/{group_id}")
 
     @staticmethod
-    async def GetFieldProps(tr_id: str) ->  list:
-        response = await LSSiteHelper.httpclient.get(LSSiteHelper.URL_BASE + "/api/apis/guide/tr/property" + f"/{tr_id}")
-        if response.status != 200:
-            return None
-        return await response.json()
+    def GetTrProps(group_id: str):
+        return LSSiteHelper.GetApiInfo(f"/api/apis/guide/tr/{group_id}")
+
+    @staticmethod
+    def GetFieldProps(tr_id: str):
+        return LSSiteHelper.GetApiInfo(f"/api/apis/guide/tr/property/{tr_id}")
 
     @staticmethod
     def GetDataType(orgName:str):
